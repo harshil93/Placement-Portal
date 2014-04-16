@@ -106,4 +106,12 @@ class SiteController extends Controller
 		Yii::app()->user->logout();
 		$this->redirect(Yii::app()->homeUrl);
 	}
+
+    public function actionTest(){
+        $username = "lodhi.harshil@gmail.com";
+        $connection = Yii::App()->db;
+        $sql = "select email_id,password from login where email_id = :email_id";
+        $users = $connection->createCommand($sql)->bindValue('email_id',$username)->queryRow();
+        var_dump($users);
+    }
 }
