@@ -1,7 +1,7 @@
 <div class="form">
 
     <?php $form=$this->beginWidget('CActiveForm', array(
-        'id'=>'login-form',
+        'id'=>'student-form',
         // Please note: When you enable ajax validation, make sure the corresponding
         // controller action is handling ajax validation correctly.
         // There is a call to performAjaxValidation() commented in generated controller code.
@@ -13,7 +13,7 @@
 
     <?php echo $form->errorSummary($modelLogin);  ?>
     <br>
-    <?php echo $form->errorSummary($modelLogin);  ?>
+    <?php echo $form->errorSummary($modelCompany);  ?>
     <div class="row">
         <?php echo $form->labelEx($modelLogin,'email_id'); ?>
         <?php echo $form->textField($modelLogin,'email_id',array('size'=>50,'maxlength'=>50)); ?>

@@ -157,4 +157,47 @@ class SiteController extends Controller
 
 
     }
+
+    public function actionRegisterCompany(){
+        $modelLogin = new Login;
+        $modelCompany = new Company;
+
+        // if it is ajax validation request
+        if(isset($_POST['ajax']) && $_POST['ajax']==='company-form')
+        {
+            echo CActiveForm::validate($modelLogin);
+            echo CActiveForm::validate($modelCompany);
+            Yii::app()->end();
+        }
+
+        // collect user input data
+        if(isset($_POST['Login']) && isset($_POST['Company']))
+        {
+
+            $modelLogin->attributes=$_POST['Login'];
+            $modelCompany->attributes = $_POST['Company'];
+            $modelLogin->level = 1;
+            $modelLogin->password = md5($modelLogin->password);
+
+            $transaction = $modelLogin->dbConnection->beginTransaction();
+            try{
+                $modelLogin->save();
+                $id =  Yii::app()->db->getLastInsertID();
+                $modelCompany->c_id = intval($id);
+                $modelCompany->save();
+                $transaction->commit();
+                Yii::app()->user->setFlash('success','Registration Successfull');
+                $this->redirect(array('index'));
+            }catch (Exception $e){
+                $transaction->rollback();
+                Yii::app()->user->setFlash('error','Insertion Error');
+            }
+
+
+        }
+
+        $this->render('regCompany',array('modelLogin'=>$modelLogin, 'modelCompany'=>$modelCompany));
+
+
+    }
 }

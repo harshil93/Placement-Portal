@@ -80,7 +80,7 @@ class Company extends CActiveRecord
 			'name' => 'Name',
 			'details' => 'Details',
 			'phone_no' => 'Phone No',
-			'email_id' => 'Email',
+			'email_id' => 'Support Email',
 		);
 	}
 
