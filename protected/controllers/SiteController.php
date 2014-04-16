@@ -114,4 +114,47 @@ class SiteController extends Controller
         $users = $connection->createCommand($sql)->bindValue('email_id',$username)->queryRow();
         var_dump($users);
     }
+
+    public function actionRegisterUser(){
+        $modelLogin = new Login;
+        $modelStudent = new Student;
+
+        // if it is ajax validation request
+        if(isset($_POST['ajax']) && $_POST['ajax']==='student-form')
+        {
+            echo CActiveForm::validate($modelLogin);
+            echo CActiveForm::validate($modelStudent);
+            Yii::app()->end();
+        }
+
+        // collect user input data
+        if(isset($_POST['Login']) && isset($_POST['Student']))
+        {
+
+            $modelLogin->attributes=$_POST['Login'];
+            $modelStudent->attributes = $_POST['Student'];
+            $modelLogin->level = 1;
+            $modelLogin->password = md5($modelLogin->password);
+
+            $transaction = $modelLogin->dbConnection->beginTransaction();
+            try{
+                $modelLogin->save();
+                $id =  Yii::app()->db->getLastInsertID();
+                $modelStudent->st_id = intval($id);
+                $modelStudent->save();
+                $transaction->commit();
+                Yii::app()->user->setFlash('success','Registration Successfull');
+                $this->redirect(array('index'));
+                }catch (Exception $e){
+                    $transaction->rollback();
+                    Yii::app()->user->setFlash('error','Insertion Error');
+                }
+
+
+        }
+
+        $this->render('regStudent',array('modelLogin'=>$modelLogin, 'modelStudent'=>$modelStudent));
+
+
+    }
 }

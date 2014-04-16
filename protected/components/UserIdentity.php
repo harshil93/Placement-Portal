@@ -15,11 +15,15 @@ class UserIdentity extends CUserIdentity
 	 * against some persistent user identity storage (e.g. database).
 	 * @return boolean whether authentication succeeds.
 	 */
+    private $_id;
+    private $_email_id;
+    private $_level;
 	public function authenticate()
 	{
+
 		$username = $this->username;
 		$connection = Yii::App()->db;
-        $sql = "select email_id,password from login where email_id = :email_id";
+        $sql = "select id,level,email_id,password from login where email_id = :email_id";
         $users = $connection->createCommand($sql)->bindValue('email_id',$username)->queryRow();
 		$sql = "select email_id,password where `email_id`='".$username."';";
 		if(!isset($users['email_id']))
@@ -27,7 +31,24 @@ class UserIdentity extends CUserIdentity
 		elseif($users['password']!== md5($this->password))
 			$this->errorCode=self::ERROR_PASSWORD_INVALID;
 		else
-			$this->errorCode=self::ERROR_NONE;
+        {
+            $this->_id=$users['id'];
+            $this->_email_id=$users["email_id"];
+            $this->_level=$users["level"];
+            $this->errorCode=self::ERROR_NONE;
+        }
 		return !$this->errorCode;
 	}
+
+    public function getId(){
+        return $this->_id;
+    }
+
+    public function getEmail_id(){
+        return $this->_email_id;
+    }
+
+    public function getLevel(){
+        return $this->_level;
+    }
 }

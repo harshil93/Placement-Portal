@@ -58,6 +58,8 @@ return array(
 			'username' => 'root',
 			'password' => 'enigma',
 			'charset' => 'utf8',
+			'enableProfiling'=>false,
+        	'enableParamLogging' => false,
 		),
 		
 		'errorHandler'=>array(
@@ -71,6 +73,11 @@ return array(
 					'class'=>'CFileLogRoute',
 					'levels'=>'error, warning',
 				),
+				array(
+		            'class'=>'CProfileLogRoute',
+		            'levels'=>'profile',
+		            'enabled'=>false,
+		        ),
 				// uncomment the following to show log messages on web pages
 				/*
 				array(
