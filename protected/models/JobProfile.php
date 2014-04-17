@@ -39,9 +39,9 @@ class JobProfile extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('ctc, tstamp, c_id, deadline', 'required'),
+			array('ctc, c_id, deadline', 'required'),
 			array('ctc, c_id', 'numerical', 'integerOnly'=>true),
-			array('cpi_cutoff', 'length', 'max'=>3),
+			array('cpi_cutoff', 'length', 'max'=>4),
 			array('description', 'length', 'max'=>500),
 			array('approved', 'length', 'max'=>1),
 			// The following rule is used by search().
