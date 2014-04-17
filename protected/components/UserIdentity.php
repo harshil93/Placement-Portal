@@ -33,7 +33,7 @@ class UserIdentity extends CUserIdentity
 		else
         {
             $this->_id=$users['id'];
-            Yii::app()->session['isAdmin'] = 'true';
+            Yii::app()->session['role'] = $users["level"];
             $this->_email_id=$users["email_id"];
             $this->_level=$users["level"];
 
