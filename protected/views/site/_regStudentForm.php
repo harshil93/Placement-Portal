@@ -13,7 +13,7 @@
 
     <?php echo $form->errorSummary($modelLogin);  ?>
     <br>
-    <?php echo $form->errorSummary($modelCompany);  ?>
+    <?php echo $form->errorSummary($modelStudent);  ?>
     <div class="row">
         <?php echo $form->labelEx($modelLogin,'email_id'); ?>
         <?php echo $form->textField($modelLogin,'email_id',array('size'=>50,'maxlength'=>50)); ?>
