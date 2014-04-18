@@ -3,7 +3,7 @@
 /* @var $dataProvider CActiveDataProvider */
 
 $this->breadcrumbs=array(
-	'Placement Reps',
+	'View Jobs',
 );
 
 /*$this->menu=array(
@@ -16,5 +16,5 @@ $this->breadcrumbs=array(
 
 <?php $this->widget('zii.widgets.CListView', array(
 	'dataProvider'=>$dataProvider,
-	'itemView'=>'_viewCompanies',
+	'itemView'=>'_viewJobProfiles',
 )); ?>

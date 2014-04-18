@@ -7,8 +7,8 @@ $this->breadcrumbs=array(
 );
 
 $this->menu=array(
-	array('label'=>'Create Student', 'url'=>array('create')),
-	array('label'=>'Manage Student', 'url'=>array('admin')),
+	array('label'=>'View Jobs', 'url'=>array('viewjobs')),
+	array('label'=>'View Offers', 'url'=>array('viewoffers')),
 );
 ?>
 

@@ -61,7 +61,7 @@ class ApplyController extends Controller
                try{
                    $st_id = Yii::App()->user->id;
                    $connection = Yii::App()->db;
-                   $sql = "INSERT INTO cv_table (j_id,c_id,cv_id,st_id) values(:j_id,:c_id,:cv_id,:st_id)";
+                   $sql = "INSERT INTO apply (j_id,c_id,cv_id,st_id) values(:j_id,:c_id,:cv_id,:st_id)";
                    $command = $connection->createCommand($sql);
                    $command->bindParam(":j_id",$j_id,PDO::PARAM_STR);
                    $command->bindParam(":c_id",$c_id,PDO::PARAM_STR);
@@ -70,8 +70,7 @@ class ApplyController extends Controller
                    $command->execute();
                    
                }catch(Exception $e){
-
-                exit(1);
+                   Yii::app()->user->setFlash('error','Either you are trying to reapply or you are doing something bad ');
             }
             }else{
                 Yii::app()->user->setFlash('error','sql count cpi cutoff');
