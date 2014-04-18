@@ -5,8 +5,6 @@ class ApplyController extends Controller
 	public function actionCreate()
 	{
 
-        if()
-
 		$this->render('create');
 	}
 
@@ -27,16 +25,20 @@ class ApplyController extends Controller
 
 	public function actionView()
 	{
-        $criteria = new CDbCriteria;
-        $criteria->select = '*';
-        $criteria->alias = "t";
-        $criteria->join ='JOIN job_profile ON job_profile.j_id = t.j_id';
-        $criteria->condition = 't.st_id = :value';
-        $criteria->params = array(":value" => Yii::App()->user->id);
-
-        $model = Apply::model()->findAll($criteria);
-
-        $this->render('view',array('model'=>$model));
+		$sqlcount =  Yii::app()->db->createCommand("select count(*) from student as s, apply as a, job_profile as jp
+			where s.st_id=a.st_id and a.j_id = jp.j_id and a.c_id = jp.c_id and s.st_id = ".Yii::App()->user->id)->queryScalar();
+		$sql = "select * from student as s, apply as a, job_profile as jp
+			where s.st_id=a.st_id and a.j_id = jp.j_id and a.c_id = jp.c_id and s.st_id = ".Yii::App()->user->id;
+		
+		$dataProvider = new CSqlDataProvider($sql, array(
+			'db' => Yii::app()->db,
+			'keyField' => 'j_id',
+			'totalItemCount' => $sqlcount
+		));
+	 
+		$this->render('view',array(
+			'dataProvider'=>$dataProvider,
+		));
 
 	}
 

@@ -2,7 +2,5 @@ assets/*
 yii/demos/*
 yii/testdrive/*
 protected/config/main.php
-<<<<<<< HEAD
 protected/runtime/application.log
-=======
->>>>>>> 34b3206a0b460a83ce1faeda00227e17f8ae9438
+
