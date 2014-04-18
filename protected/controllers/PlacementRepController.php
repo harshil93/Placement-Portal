@@ -28,16 +28,8 @@ class PlacementRepController extends Controller
 	{
 		return array(
 			array('allow',  // allow all users to perform 'index' and 'view' actions
-				'actions'=>array('index','view'),
-				'users'=>array('*'),
-			),
-			array('allow', // allow authenticated user to perform 'create' and 'update' actions
-				'actions'=>array('create','update'),
-				'users'=>array('@'),
-			),
-			array('allow', // allow admin user to perform 'admin' and 'delete' actions
-				'actions'=>array('admin','delete'),
-				'users'=>array('admin'),
+				'actions'=>array('viewAll','index','update','admin','view'),
+                'users'=>array('@'),
 			),
 			array('deny',  // deny all users
 				'users'=>array('*'),
@@ -47,15 +39,25 @@ class PlacementRepController extends Controller
 
 	/**
 	 * Displays a particular model.
-	 * @param integer $id the ID of the model to be displayed
+	 * @param integer $pr_id the ID of the model to be displayed
 	 */
-	public function actionView($id)
+	public function actionView($pr_id)
 	{
+		$model=$this->loadModel($pr_id);
 		$this->render('view',array(
-			'model'=>$this->loadModel($id),
+			'model'=>$this->loadModel($pr_id),
 		));
 	}
 
+	public function actionViewAll()
+	{
+		$dataProvider=new CActiveDataProvider('PlacementRep');
+		$this->render('viewAll',array(
+			'dataProvider'=>$dataProvider,
+		));
+	}
+
+	
 	/**
 	 * Creates a new model.
 	 * If creation is successful, the browser will be redirected to the 'view' page.
@@ -71,7 +73,7 @@ class PlacementRepController extends Controller
 		{
 			$model->attributes=$_POST['PlacementRep'];
 			if($model->save())
-				$this->redirect(array('view','id'=>$model->pr_id));
+				$this->redirect(array('view','pr_id'=>$model->pr_id));
 		}
 
 		$this->render('create',array(
@@ -82,11 +84,11 @@ class PlacementRepController extends Controller
 	/**
 	 * Updates a particular model.
 	 * If update is successful, the browser will be redirected to the 'view' page.
-	 * @param integer $id the ID of the model to be updated
+	 * @param integer $pr_id the ID of the model to be updated
 	 */
-	public function actionUpdate($id)
+	public function actionUpdate($pr_id)
 	{
-		$model=$this->loadModel($id);
+		$model=$this->loadModel($pr_id);
 
 		// Uncomment the following line if AJAX validation is needed
 		// $this->performAjaxValidation($model);
@@ -95,10 +97,10 @@ class PlacementRepController extends Controller
 		{
 			$model->attributes=$_POST['PlacementRep'];
 			if($model->save())
-				$this->redirect(array('view','id'=>$model->pr_id));
+				$this->redirect(array('view','pr_id'=>$model->pr_id));
 		}
 
-		$this->render('update',array(
+		$this->render('_updatePhone',array(
 			'model'=>$model,
 		));
 	}
@@ -106,11 +108,11 @@ class PlacementRepController extends Controller
 	/**
 	 * Deletes a particular model.
 	 * If deletion is successful, the browser will be redirected to the 'admin' page.
-	 * @param integer $id the ID of the model to be deleted
+	 * @param integer $pr_id the ID of the model to be deleted
 	 */
-	public function actionDelete($id)
+	public function actionDelete($pr_id)
 	{
-		$this->loadModel($id)->delete();
+		$this->loadModel($pr_id)->delete();
 
 		// if AJAX request (triggered by deletion via admin grid view), we should not redirect the browser
 		if(!isset($_GET['ajax']))
@@ -122,7 +124,10 @@ class PlacementRepController extends Controller
 	 */
 	public function actionIndex()
 	{
-		$dataProvider=new CActiveDataProvider('PlacementRep');
+		$dataProvider=new CActiveDataProvider('PlacementRep', array(
+			'criteria'=> array(
+				'condition'=>'pr_id='.Yii::app()->user->id
+			)));
 		$this->render('index',array(
 			'dataProvider'=>$dataProvider,
 		));
@@ -146,13 +151,13 @@ class PlacementRepController extends Controller
 	/**
 	 * Returns the data model based on the primary key given in the GET variable.
 	 * If the data model is not found, an HTTP exception will be raised.
-	 * @param integer $id the ID of the model to be loaded
+	 * @param integer $pr_id the ID of the model to be loaded
 	 * @return PlacementRep the loaded model
 	 * @throws CHttpException
 	 */
-	public function loadModel($id)
+	public function loadModel($pr_id)
 	{
-		$model=PlacementRep::model()->findByPk($id);
+		$model=PlacementRep::model()->findByPk($pr_id);
 		if($model===null)
 			throw new CHttpException(404,'The requested page does not exist.');
 		return $model;
