@@ -32,7 +32,7 @@ class CompanyController extends Controller
 				'users'=>array('*'),
 			),
 			array('allow', // allow authenticated user to perform 'create' and 'update' actions
-				'actions'=>array('create','update'),
+				'actions'=>array('create','update','viewjobprofiles'),
 				'users'=>array('@'),
 			),
 			array('allow', // allow admin user to perform 'admin' and 'delete' actions
@@ -45,6 +45,20 @@ class CompanyController extends Controller
 		);
 	}
 
+
+    public function actionViewJobProfiles(){
+        $sqlcount =  $count=Yii::app()->db->createCommand("SELECT COUNT(*) FROM job_profile t2 WHERE t2.c_id = ".Yii::App()->user->id)->queryScalar();
+        $sql = "SELECT * FROM job_profile t2 WHERE t2.c_id = ".Yii::App()->user->id;
+        $dataprovider = new CSqlDataProvider($sql, array(
+            'db' => Yii::app()->db,
+            'keyField' => 'j_id',
+            'totalItemCount' => $sqlcount
+        ));
+
+        $this->render('viewjobprofiles',array(
+            'dataprovider'=>$dataprovider,
+        ));
+    }
 	/**
 	 * Displays a particular model.
 	 * @param integer $id the ID of the model to be displayed

@@ -4,12 +4,20 @@ class JobProfileController extends Controller
 {
 	public function actionIndex()
 	{
-    exit("bablu bond");
-        $sql = "SELECT * FROM job_profile_branches t1,job_profile t2 WHERE t1.j_id=t2.j_id AND t1.c_id =  c_id = :c_id ";
-        $data = Yii::app()->db->createCommand($sql)->bindValue('c_id',Yii::App()->user->id)->queryAll();
+
+
+        exit("Index action");
+        $sql = "SELECT * FROM job_profile t2 WHERE t2.c_id = ".Yii::App()->user->id;
+        $sqlcount =  $count=Yii::app()->db->createCommand("SELECT COUNT(*) FROM job_profile t2 WHERE t2.c_id = ".Yii::App()->user->id)->queryScalar();
+
+       $dataprovider = new CSqlDataProvider($sql, array(
+            'db' => Yii::app()->db,
+            'keyField' => 'j_id',
+            'totalItemCount' => $sqlcount
+        ));
 
         $this->render('index',array(
-            'data'=>$data,
+            'dataprovider'=>$dataprovider,
         ));
 
 	}
@@ -31,7 +39,6 @@ class JobProfileController extends Controller
     public function  actionView($j_id, $c_id)
     {
         $model = $this->loadModel($j_id, $c_id);
-        var_dump($model);
         $this->render('view',array('model'=>$model));
     }
 

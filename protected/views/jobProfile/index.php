@@ -5,15 +5,22 @@ $this->breadcrumbs=array(
 	'Job Profile',
 );
 ?>
-<h1><?php echo $this->id . '/' . $this->action->id; ?></h1>
+<!--<h1><?php /*echo $this->id . '/' . $this->action->id; */?></h1>-->
 
-<p>
-	You may change the content of this page by modifying
-	the file <tt><?php echo __FILE__; ?></tt>.
-</p>
+<?php $this->widget('zii.widgets.CMenu',array(
+    'items'=>array(
+        array('label'=>'Create Job Profile', 'url'=>array('/jobProfile/create')),
+        array('label'=>'View Job Profiles', 'url'=>array('/jobProfile/view')),
+    ),
+)); ?>
 
 <?php
 echo "<pre>";
-print_r($data);
+
 echo "</pre>";
 ?>
+
+<?php $this->widget('zii.widgets.CListView', array(
+    'dataProvider'=>$dataprovider,
+    'itemView'=>'_view',
+)); ?>
