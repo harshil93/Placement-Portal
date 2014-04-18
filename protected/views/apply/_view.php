@@ -21,6 +21,8 @@
 	<?php echo CHtml::link(CHtml::encode($data['description']), array('view', 'description'=>$data['description'])); ?>
 	<br />
 
+
+
 	
 
 </div>

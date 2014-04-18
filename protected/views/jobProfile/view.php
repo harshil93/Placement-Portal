@@ -22,3 +22,13 @@ $this->menu=array(
         'description',
     ),
 )); ?>
+
+
+<?php
+    if(Yii::app()->session['role'] == 2){
+        $this->widget('zii.widgets.CListView', array(
+            'dataProvider'=>$dataProvider,
+            'itemView'=>'_viewApps',
+        ));
+    }
+?>

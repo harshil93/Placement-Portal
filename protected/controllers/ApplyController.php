@@ -115,6 +115,8 @@ class ApplyController extends Controller
 			where s.st_id=a.st_id and a.j_id = jp.j_id and a.c_id = jp.c_id and jp.c_id = ".Yii::App()->user->id)->queryScalar();
             $sql = "select * from student as s, apply as a, job_profile as jp
 			where s.st_id=a.st_id and a.j_id = jp.j_id and a.c_id = jp.c_id and jp.c_id = ".Yii::App()->user->id;
+
+
         }
 
 		$dataProvider = new CSqlDataProvider($sql, array(
