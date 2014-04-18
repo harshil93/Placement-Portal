@@ -28,7 +28,7 @@ class PlacementRepController extends Controller
 	{
 		return array(
 			array('allow',  // allow all users to perform 'index' and 'view' actions
-				'actions'=>array('viewAll','index','update','admin','view','viewCompanies'),
+				'actions'=>array('viewAll','index','update','admin','view','viewCompanies','viewJobProfiles'),
                 'users'=>array('@'),
 			),
 			array('deny',  // deny all users
@@ -53,9 +53,10 @@ class PlacementRepController extends Controller
 	{
 		$dept = PlacementRep::model()->findByPk(Yii::app()->user->id)->getAttribute("dept");
 
-		$sqlcount =  Yii::app()->db->createCommand("select count(*) from (select c_id from 
+		$sqlcount =  Yii::app()->db->createCommand("select count(*) from (select distinct(c_id) from 
 			job_profile_branches where dept = \"".$dept."\") as temp")->queryScalar();
-		$sql = "select j.c_id, c.name, c.details, c.email_id, c.phone_no from job_profile_branches as j, company as c where c.c_id = j.c_id and j.dept = \"".$dept."\"";
+		$sql = "select * from company as c where c.c_id in (select distinct(c_id) from 
+			job_profile_branches where dept = \"".$dept."\")";
 		
 		$dataProvider = new CSqlDataProvider($sql, array(
 			'db' => Yii::app()->db,
@@ -64,6 +65,24 @@ class PlacementRepController extends Controller
 		));
 		
 		$this->render('viewCompanies',array(
+			'dataProvider'=>$dataProvider,
+		));
+	}
+
+	public function actionViewJobProfiles()
+	{
+		$dept = PlacementRep::model()->findByPk(Yii::app()->user->id)->getAttribute("dept");
+
+		$sqlcount =  Yii::app()->db->createCommand("select count(*) from job_profile_branches where dept = \"".$dept."\"")->queryScalar();
+		$sql = "select * from job_profile as j, company as c where (c.c_id,j.j_id) in (select c_id, j_id from job_profile_branches where dept = \"".$dept."\")";
+		
+		$dataProvider = new CSqlDataProvider($sql, array(
+			'db' => Yii::app()->db,
+			'keyField' => 'c_id',
+			'totalItemCount' => $sqlcount
+		));
+		
+		$this->render('viewJobProfiles',array(
 			'dataProvider'=>$dataProvider,
 		));
 	}

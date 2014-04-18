@@ -10,7 +10,7 @@ $this->menu=array(
 	array('label'=>'Update Details', 'url'=>array('update', 'pr_id'=>Yii::app()->user->id)),
 	array('label'=>'View Placement Reps', 'url'=>array('viewAll')),
 	array('label'=>'View Companies', 'url'=>array('viewCompanies')),
-	array('label'=>'View Job Profiles', 'url'=>array('viewAll')),
+	array('label'=>'View Job Profiles', 'url'=>array('viewJobProfiles')),
 	array('label'=>'View Applications', 'url'=>array('viewAll')),
 );
 ?>
