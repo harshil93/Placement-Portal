@@ -1,3 +1,4 @@
 assets/*
 yii/demos/*
 yii/testdrive/*
+protected/config/main.php
