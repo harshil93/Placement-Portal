@@ -32,7 +32,7 @@ class PlacementRep extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('name, phone_no, pr_id, dept, programme', 'required'),
+			array('name, phone_no, dept, programme', 'required'),
 			array('pr_id', 'numerical', 'integerOnly'=>true),
 			array('name', 'length', 'max'=>50),
 			array('phone_no', 'length', 'max'=>10),
@@ -65,7 +65,7 @@ class PlacementRep extends CActiveRecord
 		return array(
 			'name' => 'Name',
 			'phone_no' => 'Phone No',
-			'pr_id' => 'Pr',
+			'pr_id' => 'Pr_id',
 			'dept' => 'Dept',
 			'programme' => 'Programme',
 		);

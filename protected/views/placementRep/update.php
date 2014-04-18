@@ -11,11 +11,11 @@ $this->breadcrumbs=array(
 $this->menu=array(
 	array('label'=>'List PlacementRep', 'url'=>array('index')),
 	array('label'=>'Create PlacementRep', 'url'=>array('create')),
-	array('label'=>'View PlacementRep', 'url'=>array('view', 'id'=>$model->pr_id)),
+	array('label'=>'View PlacementRep', 'url'=>array('view', 'pr_id'=>$model->pr_id)),
 	array('label'=>'Manage PlacementRep', 'url'=>array('admin')),
 );
 ?>
 
 <h1>Update PlacementRep <?php echo $model->pr_id; ?></h1>
 
-<?php $this->renderPartial('_form', array('model'=>$model)); ?>
+<?php $this->renderPartial('_updatePhone', array('model'=>$model)); ?>

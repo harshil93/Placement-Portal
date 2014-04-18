@@ -1,3 +1,6 @@
 assets/*
 yii/demos/*
 yii/testdrive/*
+protected/config/main.php
+protected/runtime/application.log
+

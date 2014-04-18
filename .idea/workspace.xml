@@ -50,10 +50,28 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="_view.php" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="_view.php" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/protected/views/company/_view.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="16" column="41" selection-start="498" selection-end="498" vertical-scroll-proportion="0.43715847" vertical-offset="0" max-vertical-offset="549">
+            <state line="17" column="10" selection-start="513" selection-end="513" vertical-scroll-proportion="-10.625" vertical-offset="0" max-vertical-offset="510">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="LoginController.php" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/protected/controllers/LoginController.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="35" column="31" selection-start="978" selection-end="978" vertical-scroll-proportion="-12.5" vertical-offset="225" max-vertical-offset="2685">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="view.php" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/protected/views/jobProfile/view.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="13" column="0" selection-start="552" selection-end="552" vertical-scroll-proportion="0.370019" vertical-offset="0" max-vertical-offset="527">
               <folding />
             </state>
           </provider>
@@ -94,7 +112,6 @@
         <option value="$PROJECT_DIR$/protected/views/layouts/column2.php" />
         <option value="$PROJECT_DIR$/protected/components/UserIdentity.php" />
         <option value="$PROJECT_DIR$/protected/views/comments/_form.php" />
-        <option value="$PROJECT_DIR$/protected/views/jobProfile/view.php" />
         <option value="$PROJECT_DIR$/protected/views/jobProfile/index.php" />
         <option value="$PROJECT_DIR$/protected/views/jobProfile/_view.php" />
         <option value="$PROJECT_DIR$/protected/views/comments/index.php" />
@@ -103,6 +120,9 @@
         <option value="$PROJECT_DIR$/protected/views/company/viewjobprofiles.php" />
         <option value="$PROJECT_DIR$/protected/views/company/_jobProfile.php" />
         <option value="$PROJECT_DIR$/protected/controllers/CompanyController.php" />
+        <option value="$PROJECT_DIR$/protected/views/company/_view.php" />
+        <option value="$PROJECT_DIR$/protected/controllers/LoginController.php" />
+        <option value="$PROJECT_DIR$/protected/views/jobProfile/view.php" />
       </list>
     </option>
   </component>
@@ -207,7 +227,7 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="company" />
+              <option name="myItemId" value="jobProfile" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -242,14 +262,6 @@
     <property name="options.searchVisible" value="true" />
     <property name="FullScreen" value="false" />
   </component>
-  <component name="RecentsManager">
-    <key name="CopyFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$/protected/views/jobProfile" />
-    </key>
-    <key name="MoveFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$/protected/views/company" />
-    </key>
-  </component>
   <component name="RunManager">
     <configuration default="true" type="PHPUnitRunConfigurationType" factoryName="PHPUnit">
       <TestRunner />
@@ -267,23 +279,6 @@
     <list size="0" />
   </component>
   <component name="ShelveChangesManager" show_recycled="false" />
-  <component name="SvnConfiguration" maxAnnotateRevisions="500" myUseAcceleration="nothing" myAutoUpdateAfterCommit="false" cleanupOnStartRun="false" SSL_PROTOCOLS="all">
-    <option name="USER" value="" />
-    <option name="PASSWORD" value="" />
-    <option name="mySSHConnectionTimeout" value="30000" />
-    <option name="mySSHReadTimeout" value="30000" />
-    <option name="LAST_MERGED_REVISION" />
-    <option name="MERGE_DRY_RUN" value="false" />
-    <option name="MERGE_DIFF_USE_ANCESTRY" value="true" />
-    <option name="UPDATE_LOCK_ON_DEMAND" value="false" />
-    <option name="IGNORE_SPACES_IN_MERGE" value="false" />
-    <option name="CHECK_NESTED_FOR_QUICK_MERGE" value="false" />
-    <option name="IGNORE_SPACES_IN_ANNOTATE" value="true" />
-    <option name="SHOW_MERGE_SOURCES_IN_ANNOTATE" value="true" />
-    <option name="FORCE_UPDATE" value="false" />
-    <option name="IGNORE_EXTERNALS" value="false" />
-    <myIsUseDefaultProxy>false</myIsUseDefaultProxy>
-  </component>
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
       <changelist id="1b90da37-ca91-432b-b46b-ca101d3f1588" name="Default" comment="" />
@@ -294,7 +289,7 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="10" y="24" width="1346" height="720" extended-state="0" />
-    <editor active="false" />
+    <editor active="true" />
     <layout>
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
@@ -302,7 +297,7 @@
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Framework" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.28033793" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.28033793" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
@@ -480,11 +475,6 @@
         <state line="37" column="35" selection-start="1005" selection-end="1009" vertical-scroll-proportion="-23.125" vertical-offset="0" max-vertical-offset="1650" />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/protected/controllers/LoginController.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="39" column="37" selection-start="1128" selection-end="1133" vertical-scroll-proportion="-15.0" vertical-offset="225" max-vertical-offset="2685" />
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/protected/controllers/StudentController.php">
       <provider selected="true" editor-type-id="text-editor">
         <state line="17" column="8" selection-start="264" selection-end="492" vertical-scroll-proportion="25.708334" vertical-offset="872" max-vertical-offset="2685" />
@@ -555,11 +545,6 @@
         <state line="37" column="14" selection-start="1269" selection-end="1765" vertical-scroll-proportion="-8.958333" vertical-offset="340" max-vertical-offset="1125" />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/protected/views/jobProfile/view.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="22" column="0" selection-start="797" selection-end="999" vertical-scroll-proportion="-12.041667" vertical-offset="41" max-vertical-offset="555" />
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/protected/views/comments/_view.php">
       <provider selected="true" editor-type-id="text-editor">
         <state line="0" column="0" selection-start="0" selection-end="1038" vertical-scroll-proportion="1.875" vertical-offset="45" max-vertical-offset="630" />
@@ -615,7 +600,21 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/protected/views/company/_view.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="16" column="41" selection-start="498" selection-end="498" vertical-scroll-proportion="0.43715847" vertical-offset="0" max-vertical-offset="549">
+        <state line="17" column="10" selection-start="513" selection-end="513" vertical-scroll-proportion="-10.625" vertical-offset="0" max-vertical-offset="510">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/protected/controllers/LoginController.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="35" column="31" selection-start="978" selection-end="978" vertical-scroll-proportion="-12.5" vertical-offset="225" max-vertical-offset="2685">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/protected/views/jobProfile/view.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="13" column="0" selection-start="552" selection-end="552" vertical-scroll-proportion="0.370019" vertical-offset="0" max-vertical-offset="527">
           <folding />
         </state>
       </provider>

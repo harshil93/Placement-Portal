@@ -6,13 +6,10 @@ $this->breadcrumbs=array(
 	'Placement Reps',
 );
 
-$this->menu=array(
-	array('label'=>'Update Details', 'url'=>array('update', 'pr_id'=>Yii::app()->user->id)),
+/*$this->menu=array(
+	array('label'=>'Update Details', 'url'=>array('update', 'id'=>$model->pr_id)),
 	array('label'=>'View Placement Reps', 'url'=>array('viewAll')),
-	array('label'=>'View Companies', 'url'=>array('viewCompanies')),
-	array('label'=>'View Job Profiles', 'url'=>array('viewJobProfiles')),
-	array('label'=>'View Applications', 'url'=>array('viewAll')),
-);
+);*/
 ?>
 
 <h1>Placement Reps</h1>

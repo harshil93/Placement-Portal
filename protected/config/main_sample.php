@@ -56,7 +56,7 @@ return array(
 			'connectionString' => 'mysql:host=localhost;dbname=placement',
 			'emulatePrepare' => true,
 			'username' => 'root',
-			'password' => 'enigma',
+			'password' => 'password',
 			'charset' => 'utf8',
 			'enableProfiling'=>false,
         	'enableParamLogging' => false,

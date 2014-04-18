@@ -1,13 +1,13 @@
 <?php
-/* @var $this CompanyController */
-/* @var $model Company */
+/* @var $this PlacementRepController */
+/* @var $model PlacementRep */
 /* @var $form CActiveForm */
 ?>
 
 <div class="form">
 
 <?php $form=$this->beginWidget('CActiveForm', array(
-	'id'=>'company-form',
+	'id'=>'placement-rep-form',
 	// Please note: When you enable ajax validation, make sure the corresponding
 	// controller action is handling ajax validation correctly.
 	// There is a call to performAjaxValidation() commented in generated controller code.
@@ -21,14 +21,8 @@
 
 	<div class="row">
 		<?php echo $form->labelEx($model,'name'); ?>
-		<?php echo $form->textField($model,'name',array('size'=>50,'maxlength'=>50)); ?>
+		<?php echo $form->textField($model,'name',array('size'=>50,'maxlength'=>50, 'readonly'=>true)); ?>
 		<?php echo $form->error($model,'name'); ?>
-	</div>
-
-	<div class="row">
-		<?php echo $form->labelEx($model,'details'); ?>
-		<?php echo $form->textField($model,'details',array('size'=>60,'maxlength'=>1000)); ?>
-		<?php echo $form->error($model,'details'); ?>
 	</div>
 
 	<div class="row">
@@ -38,9 +32,21 @@
 	</div>
 
 	<div class="row">
-		<?php echo $form->labelEx($model,'email_id'); ?>
-		<?php echo $form->textField($model,'email_id',array('size'=>50,'maxlength'=>50)); ?>
-		<?php echo $form->error($model,'email_id'); ?>
+		<?php echo $form->labelEx($model,'pr_id'); ?>
+		<?php echo $form->textField($model,'pr_id', array('readonly'=>true)); ?>
+		<?php echo $form->error($model,'pr_id'); ?>
+	</div>
+
+	<div class="row">
+		<?php echo $form->labelEx($model,'dept'); ?>
+		<?php echo $form->textField($model,'dept',array('size'=>3,'maxlength'=>3, 'readonly'=>true)); ?>
+		<?php echo $form->error($model,'dept'); ?>
+	</div>
+
+	<div class="row">
+		<?php echo $form->labelEx($model,'programme'); ?>
+		<?php echo $form->textField($model,'programme',array('size'=>5,'maxlength'=>5, 'readonly'=>true)); ?>
+		<?php echo $form->error($model,'programme'); ?>
 	</div>
 
 	<div class="row buttons">
