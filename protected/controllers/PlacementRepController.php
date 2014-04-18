@@ -211,13 +211,20 @@ class PlacementRepController extends Controller
 		));
 		
 		$sqlcount =  Yii::app()->db->createCommand("select count(*) from comments where st_id = ".$st_id." and c_id = ".$c_id." and j_id = ".$j_id)->queryScalar();
-		$sql = "select * from comments where st_id = ".$st_id." and c_id = ".$c_id." and j_id = ".$j_id;
+		$sql = "select c.*, p.name from comments as c, placement_rep as p where c.st_id = ".$st_id." and c.c_id = ".$c_id." and c.j_id = ".$j_id." and p.pr_id = ".Yii::app()->user->id;
 		
 		$dataProvider3 = new CSqlDataProvider($sql, array(
 			'db' => Yii::app()->db,
 			'keyField' => 'comment_id',
 			'totalItemCount' => $sqlcount
 		));
+		// $sql = "select name from placement_rep where pr_id = ".Yii::app()->user->id;
+
+		// $pr_name = new CSqlDataProvider($sql, array(
+		// 	'db' => Yii::app()->db,
+		// 	'keyField' => 'name',
+		// 	'totalItemCount' => 1
+		// ));
 
 		$this->render('review',array(
 			'dataProvider1'=>$dataProvider1,
@@ -251,7 +258,7 @@ class PlacementRepController extends Controller
 		{
 			$model->attributes=$_POST['PlacementRep'];
 			if($model->save())
-				$this->redirect(array('view','pr_id'=>$model->pr_id));
+				$this->redirect(array('index'));
 		}
 
 		$this->render('_updatePhone',array(
