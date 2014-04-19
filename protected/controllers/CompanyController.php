@@ -136,9 +136,13 @@ class CompanyController extends Controller
 	 */
 	public function actionIndex()
 	{
-		$dataProvider=new CActiveDataProvider('Company');
+		$dataProvider=new CActiveDataProvider('Company', array(
+			'criteria'=> array(
+				'condition'=>'c_id='.Yii::app()->user->id
+			)));
 		$this->render('index',array(
 			'dataProvider'=>$dataProvider,
+
 		));
 	}
 

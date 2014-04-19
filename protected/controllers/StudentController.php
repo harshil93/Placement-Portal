@@ -180,18 +180,17 @@ class StudentController extends Controller
 
     public function actionViewoffers(){
 
-        $dept = Student::model()->findByPk(Yii::app()->user->id)->getAttribute("dept");
+        $id = Yii::app()->user->id;
 
-        $sqlcount =  Yii::app()->db->createCommand("select count(*) from job_profile_branches where dept = \"".$dept."\"")->queryScalar();
-        $sql = "select * from job_profile as j, company as c where (c.c_id,j.j_id) in (select c_id, j_id from job_profile_branches where dept = \"".$dept."\")";
-
+        $sqlcount =  Yii::app()->db->createCommand("select count(*) from job_profile as j, offers as o where j.j_id=o.j_id and j.c_id=o.c_id and o.st_id=".$id)->queryScalar();
+        $sql = "select * from job_profile as j, offers as o,company as c where j.j_id=o.j_id and j.c_id=o.c_id and c.c_id=j.c_id and o.st_id=".$id;
         $dataProvider = new CSqlDataProvider($sql, array(
             'db' => Yii::app()->db,
-            'keyField' => 'c_id',
+            'keyField' => 'j_id',
             'totalItemCount' => $sqlcount
         ));
 
-        $this->render('viewJobProfiles',array(
+        $this->render('viewOffers',array(
             'dataProvider'=>$dataProvider,
         ));
     }
