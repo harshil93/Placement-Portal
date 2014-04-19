@@ -28,7 +28,7 @@ class PlacementRepController extends Controller
 	{
 		return array(
 			array('allow',  // allow all users to perform 'index' and 'view' actions
-				'actions'=>array('viewAll','index','update','admin','view','viewCompanies','viewJobProfiles'),
+				'actions'=>array('viewAll','index','update','admin','view','viewCompanies','viewJobProfiles','viewApps','viewStudDetails','viewCompDetails','review','afterPost'),
                 'users'=>array('@'),
 			),
 			array('deny',  // deny all users
@@ -86,6 +86,25 @@ class PlacementRepController extends Controller
 			'dataProvider'=>$dataProvider,
 		));
 	}
+
+	public function actionViewApps()
+	{
+		$dept = PlacementRep::model()->findByPk(Yii::app()->user->id)->getAttribute("dept");
+
+		$sqlcount =  Yii::app()->db->createCommand("select count(*) from apply where (j_id,c_id) in (select j_id, c_id from job_profile_branches where dept = \"".$dept."\")")->queryScalar();
+		$sql = "select a.cv_id, a.j_id, a.c_id, a.tstamp, c.name as cname, j.description, j.ctc, j.cpi_cutoff, j.approved, j.deadline, s.st_id, s.roll_no, s.name from apply as a, job_profile as j, company as c, student as s where s.st_id = a.st_id and a.j_id = j.j_id and a.c_id = c.c_id and (a.j_id,a.c_id) in (select j_id, c_id from job_profile_branches where dept = \"".$dept."\")";
+		
+		$dataProvider = new CSqlDataProvider($sql, array(
+			'db' => Yii::app()->db,
+			'keyField' => 'st_id',
+			'totalItemCount' => $sqlcount
+		));
+		
+		$this->render('viewApps',array(
+			'dataProvider'=>$dataProvider,
+		));
+	}
+
 	public function actionViewAll()
 	{
 		$dataProvider=new CActiveDataProvider('PlacementRep');
@@ -118,6 +137,111 @@ class PlacementRepController extends Controller
 		));
 	}
 
+	public function actionViewStudDetails ($st_id)
+	{
+		$model=Student::model()->findByPk($st_id);
+		if($model===null)
+			throw new CHttpException(404,'The requested page does not exist.');
+		$this->render('viewStudDetails',array('model'=>$model));
+	
+	}
+
+	public function actionViewCompDetails ($c_id)
+	{
+		$model=Company::model()->findByPk($c_id);
+		if($model===null)
+			throw new CHttpException(404,'The requested page does not exist.');
+		$this->render('viewCompDetails',array('model'=>$model));
+	
+	}
+
+	public function actionAfterPost($st_id, $c_id, $j_id, $pr_id)
+	{
+	    $model=new Comments;
+
+		// uncomment the following code to enable ajax-based validation
+		/*
+		if(isset($_POST['ajax']) && $_POST['ajax']==='job-profile-_form-form')
+		{
+		    echo CActiveForm::validate($model);
+		    Yii::app()->end();
+		}
+		*/
+		if(isset($_POST['Comments']))
+		{
+		    $model->txt = $_POST['Comments']['txt'];
+		    $model->st_id = $st_id;
+		    $model->c_id = $c_id;
+		    $model->j_id = $j_id;
+
+		    $model->pr_id = Yii::App()->user->id;
+
+		    if($model->validate())
+		    {
+		        // form inputs are valid, do something here
+		        $model->save();
+		        
+		        Yii::app()->user->setFlash('success','Comment Posted Successfully ');
+		        $this->redirect(array('index'));
+		        return;
+		    }else{
+		    	var_dump($model->getErrors());
+		    	echo 'validation problem';
+		    }
+		}
+	}
+	public function actionReview($st_id, $c_id, $j_id, $cv_id)
+	{
+	    $model=new Comments;
+
+		$sql = "select s.*, a.*, j.*, c.name as cname, c.c_id, c.details, c.email_id, c.phone_no from apply as a, job_profile as j, company as c, student as s where s.st_id = a.st_id and a.j_id = j.j_id and a.c_id = c.c_id and a.st_id = ".$st_id." and a.c_id = ".$c_id." and j.j_id = ".$j_id;
+		
+		$dataProvider1 = new CSqlDataProvider($sql, array(
+			'db' => Yii::app()->db,
+			'keyField' => 'st_id',
+			'totalItemCount' => 1
+		));
+		
+		$sql = "select * from cv_table where cv_id = ".$cv_id;
+		
+		$dataProvider2 = new CSqlDataProvider($sql, array(
+			'db' => Yii::app()->db,
+			'keyField' => 'st_id',
+			'totalItemCount' => 1
+		));
+		
+		$sqlcount =  Yii::app()->db->createCommand("select count(*) from comments where st_id = ".$st_id." and c_id = ".$c_id." and j_id = ".$j_id)->queryScalar();
+		$sql = "select c.*, p.name from comments as c, placement_rep as p where c.st_id = ".$st_id." and c.c_id = ".$c_id." and c.j_id = ".$j_id." and p.pr_id = ".Yii::app()->user->id;
+		
+		$dataProvider3 = new CSqlDataProvider($sql, array(
+			'db' => Yii::app()->db,
+			'keyField' => 'comment_id',
+			'totalItemCount' => $sqlcount
+		));
+		// $sql = "select name from placement_rep where pr_id = ".Yii::app()->user->id;
+
+		// $pr_name = new CSqlDataProvider($sql, array(
+		// 	'db' => Yii::app()->db,
+		// 	'keyField' => 'name',
+		// 	'totalItemCount' => 1
+		// ));
+
+		$this->render('review',array(
+			'dataProvider1'=>$dataProvider1,
+			'dataProvider2'=>$dataProvider2,
+			'dataProvider3'=>$dataProvider3,
+			'model'=>$model,
+			'st_id'=>$st_id,
+			'c_id'=>$c_id,
+			'j_id'=>$j_id,
+			'pr_id'=>Yii::app()->user->id,
+		));
+
+
+	    
+	    // $this->render('_form',array('model'=>$model));
+	}
+
 	/**
 	 * Updates a particular model.
 	 * If update is successful, the browser will be redirected to the 'view' page.
@@ -134,7 +258,7 @@ class PlacementRepController extends Controller
 		{
 			$model->attributes=$_POST['PlacementRep'];
 			if($model->save())
-				$this->redirect(array('view','pr_id'=>$model->pr_id));
+				$this->redirect(array('index'));
 		}
 
 		$this->render('_updatePhone',array(

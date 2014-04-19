@@ -73,8 +73,8 @@ class ApplyController extends Controller
                         $command->execute();
 
                     }catch(Exception $e){
-                        echo "Exception";
-                        exit(1);
+                        Yii::app()->user->setFlash('error','Either you are trying to reapply or you are doing something bad ');
+
                     }
                 }else{
                     Yii::app()->user->setFlash('error','sql count cpi cutoff');
@@ -128,6 +128,7 @@ class ApplyController extends Controller
 			where s.st_id=a.st_id and a.j_id = jp.j_id and a.c_id = jp.c_id and jp.c_id = ".Yii::App()->user->id)->queryScalar();
             $sql = "select * from student as s, apply as a, job_profile as jp
 			where s.st_id=a.st_id and a.j_id = jp.j_id and a.c_id = jp.c_id and jp.c_id = ".Yii::App()->user->id;
+
             $dataProvider = new CSqlDataProvider($sql, array(
                 'db' => Yii::app()->db,
                 'keyField' => 'j_id',
@@ -137,6 +138,8 @@ class ApplyController extends Controller
             $this->render('view',array(
                 'dataProvider'=>$dataProvider,
             ));
+
+
         }
 
 	}

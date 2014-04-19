@@ -4,12 +4,20 @@ class JobProfileController extends Controller
 {
 	public function actionIndex()
 	{
-    exit("bablu bond");
-        $sql = "SELECT * FROM job_profile_branches t1,job_profile t2 WHERE t1.j_id=t2.j_id AND t1.c_id =  c_id = :c_id ";
-        $data = Yii::app()->db->createCommand($sql)->bindValue('c_id',Yii::App()->user->id)->queryAll();
+
+
+        exit("Index action");
+        $sql = "SELECT * FROM job_profile t2 WHERE t2.c_id = ".Yii::App()->user->id;
+        $sqlcount =  $count=Yii::app()->db->createCommand("SELECT COUNT(*) FROM job_profile t2 WHERE t2.c_id = ".Yii::App()->user->id)->queryScalar();
+
+       $dataprovider = new CSqlDataProvider($sql, array(
+            'db' => Yii::app()->db,
+            'keyField' => 'j_id',
+            'totalItemCount' => $sqlcount
+        ));
 
         $this->render('index',array(
-            'data'=>$data,
+            'dataprovider'=>$dataprovider,
         ));
 
 	}
@@ -31,8 +39,20 @@ class JobProfileController extends Controller
     public function  actionView($j_id, $c_id)
     {
         $model = $this->loadModel($j_id, $c_id);
-        var_dump($model);
-        $this->render('view',array('model'=>$model));
+        if(Yii::app()->session['role'] == 2){
+
+            $sqlcount =  Yii::app()->db->createCommand("select count(*) from apply a,job_profile j where a.c_id=".Yii::app()->user->id." and j.deadline<CURRENT_TIMESTAMP")->queryScalar();
+            $sql =  "select a.cv_id, a.j_id, a.c_id, a.tstamp, c.name as cname, j.description, j.ctc, j.cpi_cutoff, j.approved, j.deadline, s.st_id, s.roll_no, s.name from apply as a, job_profile as j, company as c, student as s where s.st_id = a.st_id and a.j_id = j.j_id and a.c_id = c.c_id and c.c_id=".Yii::app()->user->id." and j.j_id = ". $j_id." and j.deadline<CURRENT_TIMESTAMP";
+
+
+
+            $dataProvider = new CSqlDataProvider($sql, array(
+                'db' => Yii::app()->db,
+                'keyField' => 'st_id',
+                'totalItemCount' => $sqlcount
+            ));
+        }
+        $this->render('view',array('model'=>$model,'dataProvider'=>$dataProvider,));
     }
 
 

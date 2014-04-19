@@ -51,13 +51,12 @@ or <b>=</b>) at the beginning of each of your search values to specify how the c
 		'gender',
 		'cpi',
 		'dept',
-		/*
 		'programme',
 		'category',
 		'phone_no',
 		'current_address',
 		'home_address',
-		*/
+
 		array(
 			'class'=>'CButtonColumn',
 		),

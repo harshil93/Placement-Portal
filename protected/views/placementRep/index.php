@@ -11,7 +11,7 @@ $this->menu=array(
 	array('label'=>'View Placement Reps', 'url'=>array('viewAll')),
 	array('label'=>'View Companies', 'url'=>array('viewCompanies')),
 	array('label'=>'View Job Profiles', 'url'=>array('viewJobProfiles')),
-	array('label'=>'View Applications', 'url'=>array('viewAll')),
+	array('label'=>'View Applications', 'url'=>array('viewApps')),
 );
 ?>
 

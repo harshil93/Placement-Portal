@@ -32,7 +32,7 @@ class StudentController extends Controller
 				'users'=>array('*'),
 			),
 			array('allow', // allow authenticated user to perform 'create' and 'update' actions
-				'actions'=>array('create','update'),
+				'actions'=>array('create','update','viewjobs','viewoffers'),
 				'users'=>array('@'),
 			),
 			array('allow', // allow admin user to perform 'admin' and 'delete' actions
@@ -120,13 +120,27 @@ class StudentController extends Controller
 	/**
 	 * Lists all models.
 	 */
-	public function actionIndex()
+
+    // OLD ACTION INDEX
+	/*public function actionIndex()
 	{
 		$dataProvider=new CActiveDataProvider('Student');
 		$this->render('index',array(
 			'dataProvider'=>$dataProvider,
 		));
-	}
+	}*/
+
+    public function actionIndex()
+    {
+        $dataProvider=new CActiveDataProvider('Student',array(
+            'criteria'=>array(
+                'condition'=>'st_id='.Yii::app()->user->id,
+
+            )));
+        $this->render('index',array(
+            'dataProvider'=>$dataProvider,
+        ));
+    }
 
 	/**
 	 * Manages all models.
@@ -143,6 +157,44 @@ class StudentController extends Controller
 		));
 	}
 
+    public function actionViewjobs(){
+        $stud = Student::model()->findByPk(Yii::app()->user->id);
+        $st = new Student();
+        $st->st_id = Yii::app()->user->id;
+
+        $dept = $stud->getAttribute("dept");
+
+        $sqlcount =  Yii::app()->db->createCommand("select count(*) from job_profile_branches where dept = \"".$dept."\"")->queryScalar();
+        $sql = "select * from job_profile as j, company as c where (c.c_id,j.j_id) in (select c_id, j_id from job_profile_branches where dept = \"".$dept."\")";
+
+        $dataProvider = new CSqlDataProvider($sql, array(
+            'db' => Yii::app()->db,
+            'keyField' => 'c_id',
+            'totalItemCount' => $sqlcount
+        ));
+
+        $this->render('viewJobProfiles',array(
+            'dataProvider'=>$dataProvider,
+        ));
+    }
+
+    public function actionViewoffers(){
+
+        $dept = Student::model()->findByPk(Yii::app()->user->id)->getAttribute("dept");
+
+        $sqlcount =  Yii::app()->db->createCommand("select count(*) from job_profile_branches where dept = \"".$dept."\"")->queryScalar();
+        $sql = "select * from job_profile as j, company as c where (c.c_id,j.j_id) in (select c_id, j_id from job_profile_branches where dept = \"".$dept."\")";
+
+        $dataProvider = new CSqlDataProvider($sql, array(
+            'db' => Yii::app()->db,
+            'keyField' => 'c_id',
+            'totalItemCount' => $sqlcount
+        ));
+
+        $this->render('viewJobProfiles',array(
+            'dataProvider'=>$dataProvider,
+        ));
+    }
 	/**
 	 * Returns the data model based on the primary key given in the GET variable.
 	 * If the data model is not found, an HTTP exception will be raised.
