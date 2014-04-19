@@ -53,7 +53,7 @@
 	<br />
 
 	<div class="row buttons">
-		<?php echo CHtml::button('Give Offer', array('submit' => array('offers/create', 'st_id'=>$data['st_id'], 'c_id'=>$data['c_id'], 'j_id'=>$data['j_id']))); ?>
+		<?php echo CHtml::button('Give Offer', array('submit' => array('offer/create', 'st_id'=>$data['st_id'], 'c_id'=>$data['c_id'], 'j_id'=>$data['j_id']))); ?>
 	</div>
 
 

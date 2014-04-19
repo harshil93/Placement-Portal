@@ -52,7 +52,7 @@
     <b><?php echo CHtml::encode("tstamp"); ?>:</b>
     <?php echo CHtml::encode($data['tstamp']); ?>
     <br />
-
+    
 
 
 

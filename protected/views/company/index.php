@@ -7,8 +7,9 @@ $this->breadcrumbs=array(
 );
 
 $this->menu=array(
-	array('label'=>'Create Company', 'url'=>array('create')),
-	array('label'=>'Manage Company', 'url'=>array('admin')),
+	array('label'=>'View Job Profiles', 'url'=>array('company/viewjobprofiles')),
+	array('label'=>'Create Job Profile', 'url'=>array('jobProfile/create')),
+	array('label'=>'Offers Given', 'url'=>array('offer/view')),
 );
 ?>
 

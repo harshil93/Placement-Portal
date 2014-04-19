@@ -65,7 +65,7 @@ class OfferController extends Controller
         else if(Yii::app()->session['role'] == 2)
         {
             $sqlcount =  Yii::app()->db->createCommand("select count(*) from student as s, offers as o, job_profile as jp
-			where s.st_id=a.st_id and o.j_id = jp.j_id and o.c_id = jp.c_id and jp.c_id = ".Yii::App()->user->id)->queryScalar();
+			where s.st_id=o.st_id and o.j_id = jp.j_id and o.c_id = jp.c_id and jp.c_id = ".Yii::App()->user->id)->queryScalar();
             $sql = "select * from student as s, offers as o, job_profile as jp
 			where s.st_id=o.st_id and o.j_id = jp.j_id and o.c_id = jp.c_id and jp.c_id = ".Yii::App()->user->id;
         }
