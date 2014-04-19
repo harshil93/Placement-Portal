@@ -115,7 +115,7 @@ class SiteController extends Controller
         var_dump($users);
     }
 
-    public function actionRegisterUser(){
+    public function actionRegisterStudent(){
         $modelLogin = new Login;
         $modelStudent = new Student;
 
@@ -144,7 +144,7 @@ class SiteController extends Controller
                 $modelStudent->save();
                 $transaction->commit();
                 Yii::app()->user->setFlash('success','Registration Successfull');
-                $this->redirect(array('index'));
+                $this->redirect(array('site/login'));
                 }catch (Exception $e){
                     $transaction->rollback();
                     Yii::app()->user->setFlash('error','Insertion Error');
@@ -176,7 +176,7 @@ class SiteController extends Controller
 
             $modelLogin->attributes=$_POST['Login'];
             $modelCompany->attributes = $_POST['Company'];
-            $modelLogin->level = 1;
+            $modelLogin->level = 2;
             $modelLogin->password = md5($modelLogin->password);
 
             $transaction = $modelLogin->dbConnection->beginTransaction();
@@ -187,7 +187,7 @@ class SiteController extends Controller
                 $modelCompany->save();
                 $transaction->commit();
                 Yii::app()->user->setFlash('success','Registration Successfull');
-                $this->redirect(array('index'));
+                $this->redirect(array('site/login'));
             }catch (Exception $e){
                 $transaction->rollback();
                 Yii::app()->user->setFlash('error','Insertion Error');
