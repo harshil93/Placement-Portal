@@ -54,7 +54,7 @@
     <br />
 
     <b><?php
-        echo CHtml::link(CHtml::encode("Accept"), array('offers/accept', 'j_id'=>$data['j_id'] , 'c_id'=>$data['c_id']));
+        echo CHtml::link(CHtml::encode("Accept"), array('offer/accept', 'j_id'=>$data['j_id'] , 'c_id'=>$data['c_id']));
         ?></b>
 
 
