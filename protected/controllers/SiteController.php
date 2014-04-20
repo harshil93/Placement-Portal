@@ -36,7 +36,9 @@ class SiteController extends Controller
 			$this->redirect(array('company/index'));
 		}else if(Yii::app()->session['role'] == 3){
 			$this->redirect(array('placementRep/index'));
-		}
+		}else if(Yii::app()->session['role'] == 0){
+            $this->redirect(array('admin/index'));
+        }
 		$this->render('index');
 	}
 

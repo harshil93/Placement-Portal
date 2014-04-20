@@ -102,6 +102,8 @@ class JobProfileController extends Controller
         if(isset($_POST['JobProfile']))
         {
             $model->attributes=$_POST['JobProfile'];
+
+            echo strtotime($model->deadline);
             /*echo "<pre>";
             print_r($_POST['checkbox_list_name']);
             echo "</pre>";*/

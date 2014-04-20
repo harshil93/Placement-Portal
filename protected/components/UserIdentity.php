@@ -24,6 +24,7 @@ class UserIdentity extends CUserIdentity
         if($this->username == 'admin' && $this->password == 'admin'){
             $this->errorCode=self::ERROR_NONE;
             $this->_id=0;
+            Yii::app()->session['role'] = 0;
             return !$this->errorCode;
         }
 		$username = $this->username;

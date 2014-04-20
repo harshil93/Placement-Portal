@@ -6,6 +6,27 @@ class ApplyController extends Controller
 	{
         if(Yii::app()->session['role'] == 1)
         {
+            $ppoCheck=  Yii::app()->db->createCommand("select c_id from offers where st_id = ".Yii::app()->user->id." and ppo = 'Y' and accepted = 'Y'")->queryAll();
+            
+            $offerCheck=  Yii::app()->db->createCommand("select c_id from offers where st_id = ".Yii::app()->user->id." and ppo <> 'Y' and accepted = 'Y'")->queryAll();
+            if(count($offerCheck)!=0) //checking whether he has already received a non-PPO offer or not
+            {
+                Yii::app()->user->setFlash('error','Slow down! You are already placed. Let others have a chance my friend');
+                $this->redirect(array('student/viewJobs'));
+            }
+            else if(count($ppoCheck)!=0)    //if he already has an accepted PPO
+            {
+                
+                $dreamCheck = Yii::app()->db->createCommand("select st_id from apply where st_id = ".Yii::app()->user->id)->queryAll();
+                if(count($dreamCheck)!=0) //checking if he has already applied to his dream company
+                {
+                    Yii::app()->user->setFlash('error','You already have an accepted PPO offer and have already applied to your dream company');
+                    $this->redirect(array('student/viewJobs'));
+                    
+                }
+            }
+
+
             $sqlcount =  Yii::app()->db->createCommand("select count(*) from job_profile where j_id = ".$j_id." and c_id = ".$c_id)->queryScalar();
             $sql = "select * from job_profile where j_id = ".$j_id." and c_id = ".$c_id;
 
@@ -33,6 +54,7 @@ class ApplyController extends Controller
                 'j_id'=>$j_id,
                 'c_id'=>$c_id,
             ));
+
         }
 
 	}
