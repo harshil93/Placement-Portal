@@ -163,8 +163,6 @@ class SiteController extends Controller
         }
 
         $this->render('regStudent',array('modelLogin'=>$modelLogin, 'modelStudent'=>$modelStudent));
-
-
     }
 
     public function actionRegisterCompany(){
