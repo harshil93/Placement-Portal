@@ -93,6 +93,47 @@ class Student extends CActiveRecord
 		);
 	}
 
+    public function getGenderOptions(){
+        return array('M' => 'Male', 'F' => 'Female');
+    }
+
+    public function getDeptOptions(){
+        return array(
+            'CSE'=> 'CSE',
+            'MNC'=> 'MNC',
+            'EEE'=> 'EEE',
+            'ECE'=> 'ECE',
+            'CL'=> 'CL',
+            'CE'=> 'CE',
+            'EP'=> 'EP',
+            'BT'=> 'BT',
+            'DOD'=> 'DOD',
+            'ME'=> 'ME',
+            'CST'=> 'CST',
+            'HSS'=> 'HSS',
+        );
+    }
+
+    public function getCategoryOptions(){
+        return array('GEN' => 'GEN',
+            'SC' => 'SC',
+            'ST' => 'ST',
+            'OBC' => 'OBC',
+            'PD' => 'PD',);
+    }
+
+    public function getProgrammeOptions(){
+        return array(
+            'BTECH' => 'BTECH',
+            'MTECH' => 'MTECH',
+            'PhD' => 'PhD',
+            'MSc' => 'MSc',
+            'BSc' => 'BSc',
+            'BA' => 'BA',
+            'MA' => 'MA',
+        );
+    }
+
 	/**
 	 * Retrieves a list of models based on the current search/filter conditions.
 	 *

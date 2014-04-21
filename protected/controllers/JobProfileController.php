@@ -4,26 +4,29 @@ class JobProfileController extends Controller
 {
 	public function actionIndex()
 	{
-
-
-        exit("Index action");
-        $sql = "SELECT * FROM job_profile t2 WHERE t2.c_id = ".Yii::App()->user->id;
-        $sqlcount =  $count=Yii::app()->db->createCommand("SELECT COUNT(*) FROM job_profile t2 WHERE t2.c_id = ".Yii::App()->user->id)->queryScalar();
-
-       $dataprovider = new CSqlDataProvider($sql, array(
-            'db' => Yii::app()->db,
-            'keyField' => 'j_id',
-            'totalItemCount' => $sqlcount
-        ));
-
-        $this->render('index',array(
-            'dataprovider'=>$dataprovider,
-        ));
+        $this->redirect(array('site/index'));
 
 	}
 
+    public function actionApprove($j_id,$c_id){
+        $model=$this->loadModel($j_id, $c_id);
+        $model->setAttribute('approved','Y');
+        $model->save();
+        Yii::app()->user->setFlash('success','Job Profile Approved');
+        $this->redirect(array('admin/viewJobProfiles'));
+    }
+
+    public function actionReject($j_id,$c_id){
+        $model=$this->loadModel($j_id, $c_id);
+        $model->setAttribute('approved','N');
+        $model->save();
+        Yii::app()->user->setFlash('success','Job Profile Rejected');
+        $this->redirect(array('admin/viewJobProfiles'));
+    }
+
     public function actionUpdate($j_id, $c_id)
     {
+        exit("LOLWA");
         $model=$this->loadModel($j_id, $c_id);
 
         if(isset($_POST['Result']))
@@ -102,6 +105,8 @@ class JobProfileController extends Controller
         if(isset($_POST['JobProfile']))
         {
             $model->attributes=$_POST['JobProfile'];
+
+            echo strtotime($model->deadline);
             /*echo "<pre>";
             print_r($_POST['checkbox_list_name']);
             echo "</pre>";*/
@@ -152,8 +157,12 @@ class JobProfileController extends Controller
     {
         return array(
             array('allow', // allow authenticated user to perform 'create' and 'update' actions
-                'actions'=>array('create','index','update','delete','admin','view'),
+                'actions'=>array('create','index','view'),
                 'users'=>array('@'),
+            ),
+            array('allow', // allow authenticated user to perform 'create' and 'update' actions
+                'actions'=>array('create','index','update','delete','admin','view','approve','reject'),
+                'users'=>array('admin'),
             ),
             array('deny',  // deny all users
                 'users'=>array('*'),

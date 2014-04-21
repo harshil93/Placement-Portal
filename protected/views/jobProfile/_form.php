@@ -28,8 +28,19 @@
 
 	<div class="row">
 		<?php echo $form->labelEx($model,'deadline'); ?>
-		<?php echo $form->textField($model,'deadline'); ?>
-		<?php echo $form->error($model,'deadline'); ?>
+        <?php
+        $this->widget('zii.widgets.jui.CJuiDatePicker',array(
+            'name'=>'JobProfile[deadline]',
+            'id'=>'JobProfile[deadline]',
+            'value'=>Yii::app()->dateFormatter->format("M/d/y",strtotime($model->deadline)),
+            'options'=>array(
+                'showAnim'=>'fold',
+            ),
+            'htmlOptions'=>array(
+                'style'=>'height:20px;'
+            ),
+        ));
+        ?>
 	</div>
 
 	<div class="row">

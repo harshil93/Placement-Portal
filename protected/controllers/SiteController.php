@@ -36,7 +36,9 @@ class SiteController extends Controller
 			$this->redirect(array('company/index'));
 		}else if(Yii::app()->session['role'] == 3){
 			$this->redirect(array('placementRep/index'));
-		}
+		}else if(Yii::app()->session['role'] == 0){
+            $this->redirect(array('admin/index'));
+        }
 		$this->render('index');
 	}
 
@@ -100,7 +102,7 @@ class SiteController extends Controller
 			$model->attributes=$_POST['LoginForm'];
 			// validate user input and redirect to the previous page if valid
 			if($model->validate() && $model->login())
-				$this->redirect(Yii::app()->user->returnUrl);
+				$this->redirect(array('site/index'));
 		}
 		// display the login form
 		$this->render('login',array('model'=>$model));
@@ -161,8 +163,6 @@ class SiteController extends Controller
         }
 
         $this->render('regStudent',array('modelLogin'=>$modelLogin, 'modelStudent'=>$modelStudent));
-
-
     }
 
     public function actionRegisterCompany(){

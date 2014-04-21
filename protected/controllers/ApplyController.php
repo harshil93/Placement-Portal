@@ -147,14 +147,23 @@ class ApplyController extends Controller
 		$this->render('update');
 	}
 
+    public function actionViewCompDetails ($c_id)
+    {
+        $model=Company::model()->findByPk($c_id);
+        if($model===null)
+            throw new CHttpException(404,'The requested page does not exist.');
+        $this->render('viewCompDetails',array('model'=>$model));
+
+    }
+
 	public function actionView()
 	{
 		if(Yii::app()->session['role'] == 1)
         {
             $sqlcount =  Yii::app()->db->createCommand("select count(*) from student as s, apply as a, job_profile as jp
 			where s.st_id=a.st_id and a.j_id = jp.j_id and a.c_id = jp.c_id and s.st_id = ".Yii::App()->user->id)->queryScalar();
-            $sql = "select * from student as s, apply as a, job_profile as jp
-			where s.st_id=a.st_id and a.j_id = jp.j_id and a.c_id = jp.c_id and s.st_id = ".Yii::App()->user->id;
+            $sql = "select a.cv_id, a.j_id, a.c_id, a.tstamp, c.name as cname, j.description, j.ctc, j.cpi_cutoff, j.approved, j.deadline, s.st_id, s.roll_no, s.name from student as s, apply as a, job_profile as j, company as c
+			where s.st_id=a.st_id and a.j_id = j.j_id and a.c_id = j.c_id and j.c_id = c.c_id and s.st_id = ".Yii::App()->user->id;
             $dataProvider = new CSqlDataProvider($sql, array(
                 'db' => Yii::app()->db,
                 'keyField' => 'j_id',
@@ -169,8 +178,8 @@ class ApplyController extends Controller
         {
             $sqlcount =  Yii::app()->db->createCommand("select count(*) from student as s, apply as a, job_profile as jp
 			where s.st_id=a.st_id and a.j_id = jp.j_id and a.c_id = jp.c_id and jp.c_id = ".Yii::App()->user->id)->queryScalar();
-            $sql = "select * from student as s, apply as a, job_profile as jp
-			where s.st_id=a.st_id and a.j_id = jp.j_id and a.c_id = jp.c_id and jp.c_id = ".Yii::App()->user->id;
+            $sql = "select a.cv_id, a.j_id, a.c_id, a.tstamp, c.name as cname, j.description, j.ctc, j.cpi_cutoff, j.approved, j.deadline, s.st_id, s.roll_no, s.name from student as s, apply as a, job_profile as j, company as c
+			where s.st_id=a.st_id and a.j_id = j.j_id and a.c_id = j.c_id and and j.c_id = c.c_id and j.c_id = ".Yii::App()->user->id;
 
             $dataProvider = new CSqlDataProvider($sql, array(
                 'db' => Yii::app()->db,
@@ -184,7 +193,8 @@ class ApplyController extends Controller
 
 
         }
-
+        else
+            $this->redirect('index.php?r=site/index');
 	}
 
     /**
@@ -207,7 +217,7 @@ class ApplyController extends Controller
     {
         return array(
             array('allow', // allow authenticated user to perform 'create' and 'update' actions
-                'actions'=>array('create','index','update','delete','admin','view','save'),
+                'actions'=>array('create','index','update','delete','admin','view','save','viewCompDetails'),
                 'users'=>array('@'),
             ),
             array('deny',  // deny all users

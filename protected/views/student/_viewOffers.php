@@ -45,6 +45,10 @@
     <?php echo CHtml::encode($data['approved']); ?>
     <br />
 
+    <b><?php echo CHtml::encode("PPO"); ?>:</b>
+    <?php echo CHtml::encode($data['ppo']); ?>
+    <br />
+
     <b><?php echo CHtml::encode("deadline"); ?>:</b>
     <?php echo CHtml::encode($data['deadline']); ?>
     <br />
@@ -52,8 +56,10 @@
     <b><?php echo CHtml::encode("tstamp"); ?>:</b>
     <?php echo CHtml::encode($data['tstamp']); ?>
     <br />
-    
 
+    <b><?php
+        echo CHtml::link(CHtml::encode("Accept"), array('offer/accept', 'j_id'=>$data['j_id'] , 'c_id'=>$data['c_id']));
+        ?></b>
 
 
 </div>

@@ -8,6 +8,22 @@ class AdminController extends Controller
 		$this->render('index');
 	}
 
+    public function actionViewJobProfiles()
+    {
+        $sqlcount =  Yii::app()->db->createCommand("select count(*) from job_profile")->queryScalar();
+        $sql = "SELECT * FROM job_profile AS j, company AS c WHERE c.c_id = j.c_id ORDER BY  `j`.`approved` DESC ";
+
+        $dataProvider = new CSqlDataProvider($sql, array(
+            'db' => Yii::app()->db,
+            'keyField' => 'c_id',
+            'totalItemCount' => $sqlcount
+        ));
+
+        $this->render('viewJobProfiles',array(
+            'dataProvider'=>$dataProvider,
+        ));
+    }
+
     /**
      * @return array action filters
      */
@@ -28,7 +44,7 @@ class AdminController extends Controller
     {
         return array(
             array('allow', // allow authenticated user to perform 'create' and 'update' actions
-                'actions'=>array('index'),
+                'actions'=>array('index','viewJobProfiles'),
                 'users'=>array('admin'),
             ),
             array('deny',  // deny all users
