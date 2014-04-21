@@ -28,7 +28,7 @@ class PlacementRepController extends Controller
 	{
 		return array(
 			array('allow',  // allow all users to perform 'index' and 'view' actions
-				'actions'=>array('viewAll','index','update','admin','view','viewCompanies','viewJobProfiles','viewApps','viewStudDetails','viewCompDetails','review','afterPost'),
+				'actions'=>array('create','viewAll','index','update','admin','view','viewCompanies','viewJobProfiles','viewApps','viewStudDetails','viewCompDetails','review','afterPost'),
                 'users'=>array('@'),
 			),
 			array('deny',  // deny all users
@@ -274,7 +274,8 @@ class PlacementRepController extends Controller
 	public function actionDelete($pr_id)
 	{
 		$this->loadModel($pr_id)->delete();
-
+        $model=Login::model()->find("id=?",array($id));
+        $model->delete();
 		// if AJAX request (triggered by deletion via admin grid view), we should not redirect the browser
 		if(!isset($_GET['ajax']))
 			$this->redirect(isset($_POST['returnUrl']) ? $_POST['returnUrl'] : array('admin'));

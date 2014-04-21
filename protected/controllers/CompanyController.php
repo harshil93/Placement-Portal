@@ -125,7 +125,8 @@ class CompanyController extends Controller
 	public function actionDelete($id)
 	{
 		$this->loadModel($id)->delete();
-
+        $model=Login::model()->find("id=?",array($id));
+        $model->delete();
 		// if AJAX request (triggered by deletion via admin grid view), we should not redirect the browser
 		if(!isset($_GET['ajax']))
 			$this->redirect(isset($_POST['returnUrl']) ? $_POST['returnUrl'] : array('admin'));
@@ -140,7 +141,11 @@ class CompanyController extends Controller
 			'criteria'=> array(
 				'condition'=>'c_id='.Yii::app()->user->id
 			)));
+
+        $model = $this->loadModel(Yii::app()->user->id);
+
 		$this->render('index',array(
+            'model'=>$model,
 			'dataProvider'=>$dataProvider,
 
 		));

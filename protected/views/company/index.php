@@ -13,7 +13,7 @@ $this->menu=array(
 );
 ?>
 
-<h1>Companies</h1>
+<h1>Welcome <?php echo $model->name; ?></h1>
 
 <?php $this->widget('zii.widgets.CListView', array(
 	'dataProvider'=>$dataProvider,

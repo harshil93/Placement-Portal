@@ -125,7 +125,7 @@ class JobProfileController extends Controller
 
                 }
                 Yii::app()->user->setFlash('success','Job Profile Successfully Created. Pending Approval From ADMIN');
-                $this->redirect(array('index'));
+                $this->redirect(array('company/viewjobprofiles'));
                 return;
             }
         }

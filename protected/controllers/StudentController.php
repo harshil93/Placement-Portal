@@ -27,12 +27,8 @@ class StudentController extends Controller
 	public function accessRules()
 	{
 		return array(
-			array('allow',  // allow all users to perform 'index' and 'view' actions
-				'actions'=>array('index','view'),
-				'users'=>array('*'),
-			),
 			array('allow', // allow authenticated user to perform 'create' and 'update' actions
-				'actions'=>array('create','update','viewjobs','viewoffers'),
+				'actions'=>array('create','update','viewjobs','viewoffers','index','view'),
 				'users'=>array('@'),
 			),
 			array('allow', // allow admin user to perform 'admin' and 'delete' actions
@@ -111,7 +107,8 @@ class StudentController extends Controller
 	public function actionDelete($id)
 	{
 		$this->loadModel($id)->delete();
-
+        $model=Login::model()->find("id=?",array($id));
+        $model->delete();
 		// if AJAX request (triggered by deletion via admin grid view), we should not redirect the browser
 		if(!isset($_GET['ajax']))
 			$this->redirect(isset($_POST['returnUrl']) ? $_POST['returnUrl'] : array('admin'));
@@ -165,7 +162,7 @@ class StudentController extends Controller
         $dept = $stud->getAttribute("dept");
 
         $sqlcount =  Yii::app()->db->createCommand("select count(*) from job_profile_branches where dept = \"".$dept."\"")->queryScalar();
-        $sql = "select * from job_profile as j, company as c where (c.c_id,j.j_id) in (select c_id, j_id from job_profile_branches where dept = \"".$dept."\")";
+        $sql = "select * from job_profile as j, company as c where j.approved='Y' and (c.c_id,j.j_id) in (select c_id, j_id from job_profile_branches where dept = \"".$dept."\")";
 
         $dataProvider = new CSqlDataProvider($sql, array(
             'db' => Yii::app()->db,

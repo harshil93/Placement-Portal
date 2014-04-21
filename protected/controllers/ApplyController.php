@@ -53,7 +53,7 @@ class ApplyController extends Controller
             $sqlcount =  Yii::app()->db->createCommand("select count(*) from job_profile_branches as jpb where j_id =
          ".$j_id." and c_id = ".$c_id." and dept = '".$dept."'" )->queryScalar();
 
-            $jobinfo = JobProfile::model()->find('j_id = ? and c_id = ? and CURRENT_TIMESTAMP>deadline',array($j_id,$c_id));
+            $jobinfo = JobProfile::model()->find('j_id = ? and c_id = ? and CURRENT_TIMESTAMP<deadline',array($j_id,$c_id));
 
             if(count($jobinfo))
             {
@@ -64,7 +64,7 @@ class ApplyController extends Controller
                     try{
                         $st_id = Yii::App()->user->id;
                         $connection = Yii::App()->db;
-                        $sql = "INSERT INTO cv_table (j_id,c_id,cv_id,st_id) values(:j_id,:c_id,:cv_id,:st_id)";
+                        $sql = "INSERT INTO apply (j_id,c_id,cv_id,st_id) values(:j_id,:c_id,:cv_id,:st_id)";
                         $command = $connection->createCommand($sql);
                         $command->bindParam(":j_id",$j_id,PDO::PARAM_STR);
                         $command->bindParam(":c_id",$c_id,PDO::PARAM_STR);
@@ -73,15 +73,16 @@ class ApplyController extends Controller
                         $command->execute();
 
                     }catch(Exception $e){
-                        Yii::app()->user->setFlash('error','Either you are trying to reapply or you are doing something bad ');
-
+                        Yii::app()->user->setFlash('error','Either you are trying to reapply or something has gone bad ');
                     }
                 }else{
-                    Yii::app()->user->setFlash('error','sql count cpi cutoff');
+                    Yii::app()->user->setFlash('error','CPI cutoff not satisfied ');
+
                 }
 
             }else{
-                Yii::app()->user->setFlash('error','count 0');
+                Yii::app()->user->setFlash('error','Deadline has been expired');
+
 
             }
 

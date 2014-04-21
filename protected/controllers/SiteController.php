@@ -116,11 +116,10 @@ class SiteController extends Controller
 	}
 
     public function actionTest(){
-        $username = "lodhi.harshil@gmail.com";
-        $connection = Yii::App()->db;
-        $sql = "select email_id,password from login where email_id = :email_id";
-        $users = $connection->createCommand($sql)->bindValue('email_id',$username)->queryRow();
-        var_dump($users);
+        $id = 50;
+        $model=Login::model()->find("id=?",array($id));
+        $model->delete();
+        var_dump($model);
     }
 
     public function actionRegisterStudent(){
