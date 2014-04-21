@@ -6,26 +6,46 @@ class ApplyController extends Controller
 	{
         if(Yii::app()->session['role'] == 1)
         {
-            $ppoCheck=  Yii::app()->db->createCommand("select c_id from offers where st_id = ".Yii::app()->user->id." and ppo = 'Y' and accepted = 'Y'")->queryAll();
-            
-            $offerCheck=  Yii::app()->db->createCommand("select c_id from offers where st_id = ".Yii::app()->user->id." and ppo <> 'Y' and accepted = 'Y'")->queryAll();
-            if(count($offerCheck)!=0) //checking whether he has already received a non-PPO offer or not
+            //following code snippet is to calculate the percentage placed for the <dept,programme> tuple of the student
+            $stud = Student::model()->findByPk(Yii::app()->user->id);
+            $st = new Student();
+            $st->st_id = Yii::app()->user->id;
+
+            $dept = $stud->getAttribute("dept");
+            $programme = $stud->getAttribute("programme");
+
+            $sql =  Yii::app()->db->createCommand("select count(*) as cnt from student where dept=\"".$dept."\" and programme = \"".$programme."\"")->queryRow();
+            $totalReg = $sql['cnt'];
+
+            $sql =  Yii::app()->db->createCommand("select count(*) as cnt from (select distinct(oTemp.st_id) from offers as oTemp) as o, student as s where o.st_id = s.st_id and s.dept=\"".$dept."\" and s.programme = \"".$programme."\"")->queryRow();
+            $actualStudPlaced = $sql['cnt'];
+
+            if($totalReg==0) $percent=0;
+            else $percent = ($actualStudPlaced*100)/$totalReg;
+
+            if($percent < 80)
             {
-                Yii::app()->user->setFlash('error','Slow down! You are already placed. Let others have a chance my friend');
-                $this->redirect(array('student/viewJobs'));
-            }
-            else if(count($ppoCheck)!=0)    //if he already has an accepted PPO
-            {
+
+                $ppoCheck=  Yii::app()->db->createCommand("select c_id from offers where st_id = ".Yii::app()->user->id." and ppo = 'Y' and accepted = 'Y'")->queryAll();
                 
-                $dreamCheck = Yii::app()->db->createCommand("select st_id from apply where st_id = ".Yii::app()->user->id)->queryAll();
-                if(count($dreamCheck)!=0) //checking if he has already applied to his dream company
+                $offerCheck=  Yii::app()->db->createCommand("select c_id from offers where st_id = ".Yii::app()->user->id." and ppo <> 'Y' and accepted = 'Y'")->queryAll();
+                if(count($offerCheck)!=0) //checking whether he has already received a non-PPO offer or not
                 {
-                    Yii::app()->user->setFlash('error','You already have an accepted PPO offer and have already applied to your dream company');
+                    Yii::app()->user->setFlash('error','Slow down! You are already placed. Let others have a chance my friend');
                     $this->redirect(array('student/viewJobs'));
+                }
+                else if(count($ppoCheck)!=0)    //if he already has an accepted PPO
+                {
                     
+                    $dreamCheck = Yii::app()->db->createCommand("select st_id from apply where st_id = ".Yii::app()->user->id)->queryAll();
+                    if(count($dreamCheck)!=0) //checking if he has already applied to his dream company
+                    {
+                        Yii::app()->user->setFlash('error','You already have an accepted PPO offer and have already applied to your dream company');
+                        $this->redirect(array('student/viewJobs'));
+                        
+                    }
                 }
             }
-
 
             $sqlcount =  Yii::app()->db->createCommand("select count(*) from job_profile where j_id = ".$j_id." and c_id = ".$c_id)->queryScalar();
             $sql = "select * from job_profile where j_id = ".$j_id." and c_id = ".$c_id;
