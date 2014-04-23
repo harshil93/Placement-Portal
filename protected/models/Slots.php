@@ -31,7 +31,7 @@ class Slots extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('slot_id, room_no, start_time, end_time', 'required'),
+			array('room_no, start_time, end_time', 'required'),
 			array('slot_id', 'numerical', 'integerOnly'=>true),
 			array('room_no', 'length', 'max'=>20),
 			// The following rule is used by search().

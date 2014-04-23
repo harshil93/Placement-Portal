@@ -21,5 +21,4 @@
 	<?php echo CHtml::encode($data->end_time); ?>
 	<br />
 
-
 </div>
