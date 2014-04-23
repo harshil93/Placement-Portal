@@ -108,7 +108,7 @@ class OfferController extends Controller
         if(Yii::app()->session['role'] == 1)
         {
             $offerAcCount = count(Yii::app()->db->createCommand("select c_id from offers where st_id = ".Yii::app()->user->id." and ppo <> 'Y' and accepted = 'Y'")->queryAll());
-
+            
             if($offerAcCount==0)
             {
                 $connection = Yii::App()->db;
@@ -117,6 +117,8 @@ class OfferController extends Controller
                 $command->bindParam(":j_id",$j_id,PDO::PARAM_STR);
                 $command->bindParam(":c_id",$c_id,PDO::PARAM_STR);
                 $command->execute();
+                Yii::app()->user->setFlash('success','Accepted');
+                $this->redirect(array('student/viewOffers'));
             }
             else
             {

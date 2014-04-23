@@ -40,7 +40,10 @@
 
     <div class="row">
         <?php echo $form->labelEx($modelStudent,'gender'); ?>
-        <?php echo $form->textField($modelStudent,'gender',array('size'=>1,'maxlength'=>1)); ?>
+        <?php echo CHtml::dropDownList('Student[gender]', "M",
+            $modelStudent->getgenderOptions(),
+            array('empty' => 'Select a gender'));
+        ?>
         <?php echo $form->error($modelStudent,'gender'); ?>
     </div>
 
@@ -52,19 +55,28 @@
 
     <div class="row">
         <?php echo $form->labelEx($modelStudent,'dept'); ?>
-        <?php echo $form->textField($modelStudent,'dept',array('size'=>3,'maxlength'=>3)); ?>
+        <?php echo CHtml::dropDownList('Student[dept]', "",
+            $modelStudent->getDeptOptions(),
+            array());
+        ?>
         <?php echo $form->error($modelStudent,'dept'); ?>
     </div>
 
     <div class="row">
         <?php echo $form->labelEx($modelStudent,'programme'); ?>
-        <?php echo $form->textField($modelStudent,'programme',array('size'=>5,'maxlength'=>5)); ?>
+        <?php echo CHtml::dropDownList('Student[programme]', "",
+            $modelStudent->getProgrammeOptions(),
+            array());
+        ?>
         <?php echo $form->error($modelStudent,'programme'); ?>
     </div>
 
     <div class="row">
         <?php echo $form->labelEx($modelStudent,'category'); ?>
-        <?php echo $form->textField($modelStudent,'category',array('size'=>3,'maxlength'=>3)); ?>
+        <?php echo CHtml::dropDownList('Student[category]', "",
+            $modelStudent->getCategoryOptions(),
+            array());
+        ?>
         <?php echo $form->error($modelStudent,'category'); ?>
     </div>
 

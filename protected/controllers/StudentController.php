@@ -156,7 +156,7 @@ class StudentController extends Controller
 
     public function actionViewjobs(){
         //PPO accept Check
-        $ppoCheck=  Yii::app()->db->createCommand("select count(*) from offers where st_id = ".Yii::app()->user->id." and ppo = 'Y' and accepted = 'Y'")->queryAll();
+        $ppoCheck=  Yii::app()->db->createCommand("select * from offers where st_id = ".Yii::app()->user->id." and ppo = 'Y' and accepted = 'Y'")->queryAll();
         if(count($ppoCheck)!=0)
         {
             
@@ -168,6 +168,23 @@ class StudentController extends Controller
         $st->st_id = Yii::app()->user->id;
 
         $dept = $stud->getAttribute("dept");
+        $programme = $stud->getAttribute("programme");
+
+        $sql =  Yii::app()->db->createCommand("select count(*) as cnt from student where dept=\"".$dept."\" and programme = \"".$programme."\"")->queryRow();
+        $totalReg = $sql['cnt'];
+
+        $sql =  Yii::app()->db->createCommand("select count(*) as cnt from (select distinct(oTemp.st_id) from offers as oTemp) as o, student as s where o.st_id = s.st_id and s.dept=\"".$dept."\" and s.programme = \"".$programme."\"")->queryRow();
+        $actualStudPlaced = $sql['cnt'];
+
+        if($totalReg==0) $percent=0;
+        else $percent = ($actualStudPlaced*100)/$totalReg;
+
+        if($percent>=80)
+        {
+        	Yii::app()->user->setFlash('notice','Your dept is on a roll. More than 80% placed! You may now apply for a new job profile even if you accepted an offer before.');
+        }
+
+
 
         $sqlcount =  Yii::app()->db->createCommand("select count(*) from job_profile_branches where dept = \"".$dept."\"")->queryScalar();
         $sql = "select * from job_profile as j, company as c where j.approved='Y' and (c.c_id,j.j_id) in (select c_id, j_id from job_profile_branches where dept = \"".$dept."\")";
