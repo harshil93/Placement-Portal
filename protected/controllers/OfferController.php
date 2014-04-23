@@ -35,10 +35,10 @@ class OfferController extends Controller
 
             }
 
-            $this->redirect('index.php?r=company/index');
+            $this->redirect(array('index.php?r=company/index'));
         }
         else
-            $this->redirect('index.php?r=site/index');
+            $this->redirect(array('index.php?r=site/index'));
 	}
 
 	public function actionDelete()
@@ -100,7 +100,7 @@ class OfferController extends Controller
             ));
         }
         else
-            $this->redirect('index.php?r=site/index');
+            $this->redirect(array('index.php?r=site/index'));
 	}
 
     public function actionAccept($j_id,$c_id)
