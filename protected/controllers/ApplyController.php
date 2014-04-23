@@ -108,7 +108,7 @@ class ApplyController extends Controller
 
             }
 
-            $this->redirect('index.php?r=student/index');
+            $this->redirect(array('index.php?r=student/index'));
         }
     }
 
@@ -174,7 +174,7 @@ class ApplyController extends Controller
 
         }
         else
-            $this->redirect('index.php?r=site/index');
+            $this->redirect(array('index.php?r=site/index'));
 	}
 
     /**
