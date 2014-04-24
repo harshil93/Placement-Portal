@@ -46,7 +46,7 @@ class Student extends CActiveRecord
 			array('roll_no, st_id', 'numerical', 'integerOnly'=>true),
 			array('name', 'length', 'max'=>50),
 			array('gender', 'length', 'max'=>1),
-			array('cpi, dept, category', 'length', 'max'=>3),
+			array('cpi, dept, category', 'length', 'max'=>4),
 			array('programme', 'length', 'max'=>5),
 			array('phone_no', 'length', 'max'=>10),
 			array('current_address, home_address', 'length', 'max'=>200),

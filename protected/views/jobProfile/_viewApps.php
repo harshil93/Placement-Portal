@@ -5,7 +5,7 @@
 
 <div class="view">
 	<b><?php echo CHtml::encode("st_id"); ?>:</b>
-	<?php echo CHtml::link(CHtml::encode($data['st_id']),array('viewStudDetails', 'st_id'=>$data['st_id'])); ?>
+	<?php echo CHtml::link(CHtml::encode($data['st_id']),array('company/viewStudDetails', 'st_id'=>$data['st_id'])); ?>
 	<br />
 
 	<b><?php echo CHtml::encode("roll_no"); ?>:</b>
@@ -51,6 +51,12 @@
 	<b><?php echo CHtml::encode("tstamp"); ?>:</b>
 	<?php echo CHtml::encode($data['tstamp']); ?>
 	<br />
+
+    <b><?php echo CHtml::encode("CV Link"); ?>:</b>
+    <?php echo CHtml::link(CHtml::encode("Link"),Yii::app()->getBaseUrl(true)."/".$data['cv']); ?>
+    <br />
+
+
 
 	<div class="row buttons">
 		<?php echo CHtml::button('Give Offer', array('submit' => array('offer/create', 'st_id'=>$data['st_id'], 'c_id'=>$data['c_id'], 'j_id'=>$data['j_id']))); ?>

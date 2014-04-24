@@ -32,7 +32,7 @@ class CompanyController extends Controller
 				'users'=>array('*'),
 			),
 			array('allow', // allow authenticated user to perform 'create' and 'update' actions
-				'actions'=>array('create','update','viewjobprofiles'),
+				'actions'=>array('create','update','viewjobprofiles','viewStudDetails'),
 				'users'=>array('@'),
 			),
 			array('allow', // allow admin user to perform 'admin' and 'delete' actions
@@ -132,6 +132,15 @@ class CompanyController extends Controller
 			$this->redirect(isset($_POST['returnUrl']) ? $_POST['returnUrl'] : array('admin'));
 	}
 
+
+    public function actionViewStudDetails ($st_id)
+    {
+        $model=Student::model()->findByPk($st_id);
+        if($model===null)
+            throw new CHttpException(404,'The requested page does not exist.');
+        $this->render('viewStudDetails',array('model'=>$model));
+
+    }
 	/**
 	 * Lists all models.
 	 */

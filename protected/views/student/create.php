@@ -3,7 +3,6 @@
 /* @var $model Student */
 
 $this->breadcrumbs=array(
-	'Students'=>array('index'),
 	'Create',
 );
 

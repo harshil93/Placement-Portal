@@ -3,8 +3,6 @@
 /* @var $model Student */
 
 $this->breadcrumbs=array(
-	'Students'=>array('index'),
-	$model->name=>array('view','id'=>$model->st_id),
 	'Update',
 );
 
