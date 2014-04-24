@@ -3,12 +3,10 @@
 /* @var $model Login */
 
 $this->breadcrumbs=array(
-	'Logins'=>array('index'),
 	$model->email_id,
 );
 
 $this->menu=array(
-	array('label'=>'List Login', 'url'=>array('index')),
 	array('label'=>'Create Login', 'url'=>array('create')),
 	array('label'=>'Update Login', 'url'=>array('update', 'id'=>$model->email_id)),
 	array('label'=>'Delete Login', 'url'=>'#', 'linkOptions'=>array('submit'=>array('delete','id'=>$model->email_id),'confirm'=>'Are you sure you want to delete this item?')),

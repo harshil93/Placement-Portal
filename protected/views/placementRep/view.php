@@ -3,12 +3,10 @@
 /* @var $model PlacementRep */
 
 $this->breadcrumbs=array(
-	'Placement Reps'=>array('index'),
 	$model->name,
 );
 
 $this->menu=array(
-	array('label'=>'List PlacementRep', 'url'=>array('index')),
 	array('label'=>'Create PlacementRep', 'url'=>array('create')),
 	array('label'=>'Update PlacementRep', 'url'=>array('update', 'pr_id'=>$model->pr_id)),
 	array('label'=>'Delete PlacementRep', 'url'=>'#', 'linkOptions'=>array('submit'=>array('delete','id'=>$model->pr_id),'confirm'=>'Are you sure you want to delete this item?')),

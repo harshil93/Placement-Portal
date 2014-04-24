@@ -3,12 +3,10 @@
 /* @var $model PlacementRep */
 
 $this->breadcrumbs=array(
-	'Placement Reps'=>array('index'),
 	'Create',
 );
 
 $this->menu=array(
-	array('label'=>'List PlacementRep', 'url'=>array('index')),
 	array('label'=>'Manage PlacementRep', 'url'=>array('admin')),
 );
 ?>

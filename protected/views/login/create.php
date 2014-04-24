@@ -3,12 +3,10 @@
 /* @var $model Login */
 
 $this->breadcrumbs=array(
-	'Logins'=>array('index'),
 	'Create',
 );
 
 $this->menu=array(
-	array('label'=>'List Login', 'url'=>array('index')),
 	array('label'=>'Manage Login', 'url'=>array('admin')),
 );
 ?>

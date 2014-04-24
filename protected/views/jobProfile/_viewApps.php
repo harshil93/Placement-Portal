@@ -17,7 +17,7 @@
 	<br />
 
 	<b><?php echo CHtml::encode("c_id"); ?>:</b>
-	<?php echo CHtml::link(CHtml::encode($data['c_id']),array('viewCompDetails', 'c_id'=>$data['c_id'])); ?>
+	<?php echo CHtml::encode($data['c_id']); ?>
 	<br />
 
 	<b><?php echo CHtml::encode("Company name"); ?>:</b>
