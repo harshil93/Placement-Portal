@@ -36,8 +36,8 @@ class SlotsController extends Controller
 				'users'=>array('@'),
 			),
 			array('allow', // allow admin user to perform 'admin' and 'delete' actions
-				'actions'=>array('admin','delete'),
-				'users'=>array('admin','viewJobSlots','viewPptSlots','allotPptSlots','allotJobSlots'),
+				'actions'=>array('admin','delete','viewJobSlots','viewPptSlots','allotPptSlots','allotJobSlots','allotJobView'),
+				'users'=>array('admin'),
 			),
 			array('deny',  // deny all users
 				'users'=>array('*'),
@@ -235,9 +235,12 @@ class SlotsController extends Controller
                $command->bindParam(":c_id",$c_id,PDO::PARAM_STR);
                $command->bindParam(":slot_id",$slot_id,PDO::PARAM_STR);
                $command->execute();
-
+               Yii::app()->user->setFlash('success','Slot Alloted');
+               $this->redirect(array('admin/viewJobProfiles'));
            }catch(Exception $e){
                Yii::app()->user->setFlash('error','Unable to insert slot');
+               echo $e->getMessage();
+               exit(0);
            }
        }
         else
@@ -270,6 +273,23 @@ class SlotsController extends Controller
         }
         $this->redirect(array('viewPptSlots'));
 
+    }
+
+    public function actionAllotJobView($j_id,$c_id){
+        $sql = "select slot_id,start_time,end_time,room_no from slots where slot_id not in (select slot_id from slot_alloted);";
+
+        $sqlcount = Yii::app()->db->createCommand("select count(*) from slots where slot_id not in (select slot_id from slot_alloted);")->queryScalar();
+
+
+        $dataProvider = new CSqlDataProvider($sql, array(
+            'db' => Yii::app()->db,
+            'keyField' => 'slot_id',
+            'totalItemCount' => $sqlcount
+        ));
+
+        $this->render('allotjobview',array(
+            'dataProvider'=>$dataProvider,
+        ));
     }
 
 	/**

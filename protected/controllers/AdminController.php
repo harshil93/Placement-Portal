@@ -11,11 +11,11 @@ class AdminController extends Controller
     public function actionViewJobProfiles()
     {
         $sqlcount =  Yii::app()->db->createCommand("select count(*) from job_profile")->queryScalar();
-        $sql = "SELECT * FROM job_profile AS j, company AS c WHERE c.c_id = j.c_id ORDER BY  `j`.`approved` DESC ";
+        $sql = "SELECT j.*, st.start_time,st.end_time,st.room_no,st.slot_id,c.* FROM job_profile j left join slot_time st on j.j_id =st.j_id, company as c WHERE c.c_id = j.c_id  ORDER BY  `j`.`approved` DESC";
 
         $dataProvider = new CSqlDataProvider($sql, array(
             'db' => Yii::app()->db,
-            'keyField' => 'c_id',
+            'keyField' => 'j_id',
             'totalItemCount' => $sqlcount
         ));
 

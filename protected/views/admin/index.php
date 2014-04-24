@@ -14,6 +14,7 @@ array('label'=>'Manage Placement Rep', 'url'=>array('placementRep/admin')),
 array('label'=>'Manage Logins', 'url'=>array('login/admin')),
 array('label'=>'Manage Job Profiles', 'url'=>array('admin/viewJobProfiles')),
 array('label'=>'View Stats', 'url'=>array('stats/index')),
+array('label'=>'Manage Slots', 'url'=>array('slots/admin')),
 //software
 );
 ?>

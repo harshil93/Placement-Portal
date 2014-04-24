@@ -4,7 +4,6 @@
 ?>
 
 <div class="view">
-
 	<b><?php echo CHtml::encode("c_id"); ?>:</b>
 	<?php echo CHtml::encode($data['c_id']); ?>
 	<br />
@@ -56,7 +55,8 @@
                 echo CHtml::link(CHtml::encode("Approve"), array('jobProfile/approve', 'j_id'=>$data['j_id'] , 'c_id'=>$data['c_id']));
                 echo "<br>";
                 echo CHtml::link(CHtml::encode("Reject"), array('jobProfile/reject', 'j_id'=>$data['j_id'] , 'c_id'=>$data['c_id']));
-            ?></b>
+                echo "<br/>";
+                ?></b>
 
         <?php   }else{ ?>
             <b><?php echo CHtml::encode("Approved Status"); ?>:</b>
@@ -64,6 +64,40 @@
             <br />
 
         <?php } ?>
+
+        <?php if($data['slot_id'] == NULL )
+        {
+
+            echo "<b>";
+            echo CHtml::link(CHtml::encode("Allot Job Slot"), array('slots/allotJobView', 'j_id'=>$data['j_id'] , 'c_id'=>$data['c_id']));
+            echo "</b>";
+
+        }else{
+            echo "<b>";
+            echo CHtml::encode("start time");
+            echo ": </b>";
+            echo CHtml::encode($data['start_time']);
+
+            echo "<br/>";
+
+            echo "<b>";
+            echo CHtml::encode("end time");
+            echo ": </b>";
+            echo CHtml::encode($data['end_time']);
+
+            echo "<br/>";
+
+
+            echo "<b>";
+            echo CHtml::encode("room");
+            echo ": </b>";
+            echo CHtml::encode($data['room_no']);
+
+            echo "<br/>";
+
+
+        }
+        ?>
 
 
 

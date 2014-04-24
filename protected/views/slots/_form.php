@@ -37,18 +37,6 @@
 		<?php echo $form->error($model,'end_time'); ?>
 	</div>
 
-	<div class="row">
-		<?php echo $form->labelEx($model,'Allot PPT slot to '); ?>
-		<?php echo $form->textField($model,'c_id'); ?>
-		<?php echo $form->error($model,'end_time'); ?>
-	</div>
-
-	<div class="row">
-		<?php echo $form->labelEx($model,'Allot Job Slot to '); ?>
-		<?php echo $form->textField($model,'j_id'); ?>
-		<?php echo $form->error($model,''); ?>
-	</div>
-
 	<div class="row buttons">
 		<?php echo CHtml::submitButton($model->isNewRecord ? 'Create' : 'Save'); ?>
 	</div>
