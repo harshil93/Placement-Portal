@@ -45,7 +45,7 @@ class JobProfileController extends Controller
         if(Yii::app()->session['role'] == 2){
 
             $sqlcount =  Yii::app()->db->createCommand("select count(*) from apply a,job_profile j where a.c_id=".Yii::app()->user->id." and j.deadline<CURRENT_TIMESTAMP")->queryScalar();
-            $sql =  "select cvt.cv, a.cv_id, a.j_id, a.c_id, a.tstamp, c.name as cname, j.description, j.ctc, j.cpi_cutoff, j.approved, j.deadline, s.st_id, s.roll_no, s.name from apply as a, job_profile as j, company as c, student as s, cv_table as cvt where cvt.cv_id = a.cv_id and cvt.st_id = a.st_id and s.st_id = a.st_id and a.j_id = j.j_id and a.c_id = c.c_id and c.c_id=".Yii::app()->user->id." and j.j_id = ". $j_id." and j.deadline<CURRENT_TIMESTAMP";
+            $sql =  "select cvt.cv, a.cv_id, a.j_id, a.c_id, a.tstamp, c.name as cname, j.description, j.ctc, j.cpi_cutoff, j.approved, j.deadline, s.st_id, s.roll_no, s.name from apply as a, job_profile as j, company as c, student as s, cv_table as cvt where cvt.cv_id = a.cv_id and cvt.st_id = a.st_id and s.st_id = a.st_id and a.j_id = j.j_id and a.c_id = c.c_id and c.c_id=".Yii::app()->user->id." and j.j_id = ". $j_id." and j.deadline<CURRENT_TIMESTAMP and (a.j_id,a.c_id,a.st_id) NOT in (select j_id,c_id,st_id from offers)";
 
 
 

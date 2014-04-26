@@ -24,21 +24,23 @@ class OfferController extends Controller
                     $command->bindParam(":c_id",$c_id,PDO::PARAM_STR);
                     $command->bindParam(":st_id",$st_id,PDO::PARAM_STR);
                     $command->execute();
-
+                    Yii::app()->user->setFlash('success','Offer Given');
+                    $this->redirect(array('site/index'));
                 }catch(Exception $e){
-                    echo "Exception";
-                    exit(1);
+                    Yii::app()->user->setFlash('error','Offer Already Given');
+                    $this->redirect(array('site/index'));
                 }
 
             }else{
-                Yii::app()->user->setFlash('error','count 0');
+                Yii::app()->user->setFlash('error','This student has not applied for the job ');
+                $this->redirect(array('site/index'));
 
             }
 
-            $this->redirect(array('index.php?r=company/index'));
+
         }
         else
-            $this->redirect(array('index.php?r=site/index'));
+            $this->redirect(array('site/index'));
 	}
 
 	public function actionDelete()

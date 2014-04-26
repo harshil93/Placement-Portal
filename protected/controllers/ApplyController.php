@@ -115,10 +115,11 @@ class ApplyController extends Controller
                         $command->execute();
                         Yii::app()->user->setFlash('success','Successfully Applied ');
                     }catch(Exception $e){
-                        Yii::app()->user->setFlash('error','Either you are trying to reapply or something has gone bad ');
+                        Yii::app()->user->setFlash('error','You are trying to reapply');
                     }
                 }else{
                     Yii::app()->user->setFlash('error','CPI cutoff not satisfied ');
+
 
                 }
 
@@ -128,7 +129,7 @@ class ApplyController extends Controller
 
             }
 
-            $this->redirect(array('index.php?r=student/index'));
+            $this->redirect(array('site/index'));
         }
     }
 
