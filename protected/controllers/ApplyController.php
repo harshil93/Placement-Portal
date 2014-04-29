@@ -71,7 +71,7 @@ class ApplyController extends Controller
                         $command->bindParam(":cv_id",$_POST['cv_id'],PDO::PARAM_STR);
                         $command->bindParam(":st_id",$st_id,PDO::PARAM_STR);
                         $command->execute();
-
+                        Yii::app()->user->setFlash('success','Successfully Applied ');
                     }catch(Exception $e){
                         Yii::app()->user->setFlash('error','Either you are trying to reapply or something has gone bad ');
                     }
