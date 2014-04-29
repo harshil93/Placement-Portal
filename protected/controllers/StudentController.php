@@ -155,6 +155,14 @@ class StudentController extends Controller
 	}
 
     public function actionViewjobs(){
+        //PPO accept Check
+        $ppoCheck=  Yii::app()->db->createCommand("select count(*) from offers where st_id = ".Yii::app()->user->id." and ppo = 'Y' and accepted = 'Y'")->queryAll();
+        if(count($ppoCheck)!=0)
+        {
+            
+            Yii::app()->user->setFlash('notice','You have already accepted your PPO and hence, will be able to apply to ONLY ONE company');
+        }
+
         $stud = Student::model()->findByPk(Yii::app()->user->id);
         $st = new Student();
         $st->st_id = Yii::app()->user->id;

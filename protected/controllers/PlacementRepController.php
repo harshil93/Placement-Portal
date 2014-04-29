@@ -28,8 +28,13 @@ class PlacementRepController extends Controller
 	{
 		return array(
 			array('allow',  // allow all users to perform 'index' and 'view' actions
-				'actions'=>array('create','viewAll','index','update','admin','view','viewCompanies','viewJobProfiles','viewApps','viewStudDetails','viewCompDetails','review','afterPost'),
+				'actions'=>array('viewAll','index','update','view','viewCompanies','viewJobProfiles','viewApps','viewStudDetails','viewCompDetails','review','afterPost'),
                 'users'=>array('@'),
+
+			),
+			array('allow',
+					'actions'=>array('create','delete','admin'),
+					'users'=>array('admin'),
 			),
 			array('deny',  // deny all users
 				'users'=>array('*'),
@@ -120,21 +125,54 @@ class PlacementRepController extends Controller
 	 */
 	public function actionCreate()
 	{
-		$model=new PlacementRep;
+		
+		$modelLogin = new Login;
+		$modelPR = new PlacementRep;
 
-		// Uncomment the following line if AJAX validation is needed
-		// $this->performAjaxValidation($model);
-
-		if(isset($_POST['PlacementRep']))
+		// if it is ajax validation request
+		if(isset($_POST['ajax']) && $_POST['ajax']==='pr-form')
 		{
-			$model->attributes=$_POST['PlacementRep'];
-			if($model->save())
-				$this->redirect(array('view','pr_id'=>$model->pr_id));
+		    echo CActiveForm::validate($modelLogin);
+		    echo CActiveForm::validate($modelPR);
+		    Yii::app()->end();
 		}
 
-		$this->render('create',array(
-			'model'=>$model,
-		));
+		// collect user input data
+		if(isset($_POST['Login']) && isset($_POST['PlacementRep']))
+		{
+
+		    $modelLogin->attributes=$_POST['Login'];
+		    $modelPR->attributes = $_POST['PlacementRep'];
+		    $modelLogin->level = 3;
+		    $modelLogin->password = md5($modelLogin->password);
+
+		    $transaction = $modelLogin->dbConnection->beginTransaction();
+		    try{
+		        $modelLogin->save();
+		        $id =  Yii::app()->db->getLastInsertID();
+		        $modelPR->pr_id = intval($id);
+		        $modelPR->save();
+		        $transaction->commit();
+		        Yii::app()->user->setFlash('success','New PR entries successfull added');
+		        $this->redirect(array('site/index'));
+		        }catch (Exception $e){
+		            $transaction->rollback();
+		            Yii::app()->user->setFlash('error','Insertion Error');
+		        }
+
+
+		}
+
+		$this->render('regPR',array('modelLogin'=>$modelLogin, 'modelPR'=>$modelPR));
+
+
+
+
+
+
+
+
+		
 	}
 
 	public function actionViewStudDetails ($st_id)
@@ -271,9 +309,9 @@ class PlacementRepController extends Controller
 	 * If deletion is successful, the browser will be redirected to the 'admin' page.
 	 * @param integer $pr_id the ID of the model to be deleted
 	 */
-	public function actionDelete($pr_id)
+	public function actionDelete($id)
 	{
-		$this->loadModel($pr_id)->delete();
+		$this->loadModel($id)->delete();
         $model=Login::model()->find("id=?",array($id));
         $model->delete();
 		// if AJAX request (triggered by deletion via admin grid view), we should not redirect the browser
