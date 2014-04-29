@@ -4,37 +4,41 @@ class OfferController extends Controller
 {
 	public function actionCreate($j_id,$c_id,$st_id)
 	{
-        if(!(isset($st_id) && isset($j_id) && isset ($c_id))){
-            Yii::app()->user->setFlash('error','Error');
-            $this->redirect(array('index'));
-        }
-
-        $sqlcount =  Yii::app()->db->createCommand("select count(*) from apply where j_id =
-         ".$j_id." and c_id = ".$c_id." and st_id = '".$st_id."'" )->queryScalar();
-
-        if($sqlcount)
+        if(Yii::app()->session['role'] == 2)
         {
-            try{
-                $connection = Yii::App()->db;
-                $sql = "INSERT INTO offers (j_id,c_id,st_id) values(:j_id,:c_id,:st_id)";
-                $command = $connection->createCommand($sql);
-                $command->bindParam(":j_id",$j_id,PDO::PARAM_STR);
-                $command->bindParam(":c_id",$c_id,PDO::PARAM_STR);
-                $command->bindParam(":st_id",$st_id,PDO::PARAM_STR);
-                $command->execute();
-
-            }catch(Exception $e){
-                echo "Exception";
-                exit(1);
+            if(!(isset($st_id) && isset($j_id) && isset ($c_id))){
+                Yii::app()->user->setFlash('error','Error');
+                $this->redirect(array('index'));
             }
 
-        }else{
-            Yii::app()->user->setFlash('error','count 0');
+            $sqlcount =  Yii::app()->db->createCommand("select count(*) from apply where j_id =
+         ".$j_id." and c_id = ".$c_id." and st_id = '".$st_id."'" )->queryScalar();
 
+            if($sqlcount)
+            {
+                try{
+                    $connection = Yii::App()->db;
+                    $sql = "INSERT INTO offers (j_id,c_id,st_id) values(:j_id,:c_id,:st_id)";
+                    $command = $connection->createCommand($sql);
+                    $command->bindParam(":j_id",$j_id,PDO::PARAM_STR);
+                    $command->bindParam(":c_id",$c_id,PDO::PARAM_STR);
+                    $command->bindParam(":st_id",$st_id,PDO::PARAM_STR);
+                    $command->execute();
+
+                }catch(Exception $e){
+                    echo "Exception";
+                    exit(1);
+                }
+
+            }else{
+                Yii::app()->user->setFlash('error','count 0');
+
+            }
+
+            $this->redirect('index.php?r=company/index');
         }
-
-        $this->redirect('index.php?r=company/index');
-
+        else
+            $this->redirect('index.php?r=site/index');
 	}
 
 	public function actionDelete()
@@ -52,34 +56,51 @@ class OfferController extends Controller
 		$this->render('update');
 	}
 
-	public function actionView()
+    public function actionViewCompDetails ($c_id)
+    {
+        $model=Company::model()->findByPk($c_id);
+        if($model===null)
+            throw new CHttpException(404,'The requested page does not exist.');
+        $this->render('viewCompDetails',array('model'=>$model));
+
+    }
+
+    public function actionView()
 	{
         if(Yii::app()->session['role'] == 1)
         {
             $sqlcount =  Yii::app()->db->createCommand("select count(*) from student as s, offers as o, job_profile as jp
 			where s.st_id=o.st_id and o.j_id = jp.j_id and o.c_id = jp.c_id and s.st_id = ".Yii::App()->user->id)->queryScalar();
-            $sql = "select * from student as s, offers as o, job_profile as jp
-			where s.st_id=o.st_id and o.j_id = jp.j_id and o.c_id = jp.c_id and s.st_id = ".Yii::App()->user->id;
+            $sql = "select o.joining_date,o.j_id, o.ppo, o.location, o.offer_deadline,o.accepted,c.c_id, c.name as cname, j.description, j.ctc, j.cpi_cutoff, j.approved, j.deadline, s.st_id, s.roll_no, s.name from student as s, offers as o, job_profile as j,company as c
+			where s.st_id=o.st_id and o.j_id = j.j_id and o.c_id = j.c_id and j.c_id = c.c_id and s.st_id = ".Yii::App()->user->id;
+            $dataProvider = new CSqlDataProvider($sql, array(
+                'db' => Yii::app()->db,
+                'keyField' => 'j_id',
+                'totalItemCount' => $sqlcount
+            ));
 
+            $this->render('view',array(
+                'dataProvider'=>$dataProvider,
+            ));
         }
         else if(Yii::app()->session['role'] == 2)
         {
             $sqlcount =  Yii::app()->db->createCommand("select count(*) from student as s, offers as o, job_profile as jp
 			where s.st_id=o.st_id and o.j_id = jp.j_id and o.c_id = jp.c_id and jp.c_id = ".Yii::App()->user->id)->queryScalar();
-            $sql = "select * from student as s, offers as o, job_profile as jp
-			where s.st_id=o.st_id and o.j_id = jp.j_id and o.c_id = jp.c_id and jp.c_id = ".Yii::App()->user->id;
+            $sql = "select o.joining_date,o.j_id, o.ppo, o.location, o.offer_deadline,o.accepted, c.c_id, c.name as cname, j.description, j.ctc, j.cpi_cutoff, j.approved, j.deadline, s.st_id, s.roll_no, s.name from student as s, offers as o, job_profile as j,company as c
+			where s.st_id=o.st_id and o.j_id = j.j_id and o.c_id = j.c_id and j.c_id = c.c_id and j.c_id = ".Yii::App()->user->id;
+            $dataProvider = new CSqlDataProvider($sql, array(
+                'db' => Yii::app()->db,
+                'keyField' => 'j_id',
+                'totalItemCount' => $sqlcount
+            ));
+
+            $this->render('view',array(
+                'dataProvider'=>$dataProvider,
+            ));
         }
-
-        $dataProvider = new CSqlDataProvider($sql, array(
-            'db' => Yii::app()->db,
-            'keyField' => 'j_id',
-            'totalItemCount' => $sqlcount
-        ));
-
-        $this->render('view',array(
-            'dataProvider'=>$dataProvider,
-        ));
-
+        else
+            $this->redirect('index.php?r=site/index');
 	}
 
 	// Uncomment the following methods and override them if needed
