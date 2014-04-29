@@ -9,6 +9,7 @@ $this->breadcrumbs=array(
 $this->menu=array(
 	array('label'=>'View Jobs', 'url'=>array('viewjobs')),
 	array('label'=>'View Offers', 'url'=>array('viewoffers')),
+    array('label'=>'Upload CV','url'=>array('cvTable/create')),
 );
 ?>
 
