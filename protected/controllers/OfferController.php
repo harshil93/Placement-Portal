@@ -103,6 +103,29 @@ class OfferController extends Controller
             $this->redirect('index.php?r=site/index');
 	}
 
+    public function actionAccept($j_id,$c_id)
+    {
+        if(Yii::app()->session['role'] == 1)
+        {
+            $offerAcCount = count(Yii::app()->db->createCommand("select c_id from offers where st_id = ".Yii::app()->user->id." and ppo <> 'Y' and accepted = 'Y'")->queryAll());
+
+            if($offerAcCount==0)
+            {
+                $connection = Yii::App()->db;
+                $sql = "UPDATE offers set accepted = 'Y' where j_id = :j_id and c_id = :c_id and st_id = ".Yii::app()->user->id;
+                $command = $connection->createCommand($sql);
+                $command->bindParam(":j_id",$j_id,PDO::PARAM_STR);
+                $command->bindParam(":c_id",$c_id,PDO::PARAM_STR);
+                $command->execute();
+            }
+            else
+            {
+                Yii::app()->user->setFlash('error','Slow down! You are already placed. Let others have a chance my friend');
+                $this->redirect(array('student/viewOffers'));
+            }
+        }
+    }
+
 	// Uncomment the following methods and override them if needed
 	/*
 	public function filters()
