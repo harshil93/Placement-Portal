@@ -1,0 +1,143 @@
+Student
+1. st_id -> Student (i.e. st_id derives the entire relation/table Student)
+1. roll_no -> Student
+2. email_id -> Student
+
+So, in student table, there are three candidate keys, namely, st_id, roll_no and email_id. We can choose any one of them as the Primary key for Student table. We have made st_id as the Primary Key.
+
+In FD1, st_id is a superkey (infact, it is a candidate key)
+In FD2, roll_no is a superkey (infact, it is a candidate key)
+In FD3, email_id is a superkey (infact, it is a candidate key)
+
+So, table is BCNF.
+
+--------------------------------
+
+spi_table
+1. st_id sem -> spi_table
+
+The tuple <st_id, sem> is the primary key.
+Since FD1 is the only FD on this table, hence, it is BCNF
+
+--------------------------------
+
+placement_rep
+1.st_id -> placement_rep
+
+st_id is the primary key.
+Since FD1 is the only FD on this table, hence, it is BCNF
+
+--------------------------------
+
+job_profile_branches
+1. c_id j_id -> job_profile_branches
+
+The tuple <c_id, j_id> is the primary key.
+Since FD1 is the only FD on this table, hence, it is BCNF
+
+--------------------------------
+
+job_profile
+1. j_id -> job_profile
+
+j_id is the primary key.
+Since FD1 is the only FD on this table, hence, it is BCNF
+
+--------------------------------
+
+cv_table
+1. cv_id -> cv_table
+
+cv_id is the primary key.
+Since FD1 is the only FD on this table, hence, it is BCNF
+
+-------------------------------
+
+login
+1. email_id -> login
+2. id -> login
+
+So, in login table, there are two candidate keys, namely, email_id, and id. We can choose any one of them as the Primary key for login table. We have made email_id as the Primary Key.
+
+In FD1, email_id is a superkey (infact, it is a candidate key)
+In FD2, id is a superkey (infact, it is a candidate key)
+
+So, table is BCNF.
+
+-------------------------------
+
+recruiter_details
+1. c_id e_id -> recruiter_details
+
+The tuple <c_id, e_id> is the primary key.
+Since FD1 is the only FD on this table, hence, it is BCNF
+
+-------------------------------
+
+company
+1. c_id -> company
+2. email_id -> company
+
+So, in company table, there are two candidate keys, namely, c_id and email_id. We can choose any one of them as the Primary key for company table. We have made c_id as the Primary Key.
+
+In FD1, c_id is a superkey (infact, it is a candidate key)
+In FD2, email_id is a superkey (infact, it is a candidate key)
+
+So, table is BCNF.
+
+-------------------------------
+
+slots
+1. slot_id -> slots
+
+slot_id is the primary key.
+Since FD1 is the only FD on this table, hence, it is BCNF
+
+-------------------------------
+
+apply
+1. roll_no j_id c_id -> apply
+
+The tuple <roll_no, j_id, c_id> is the primary key.
+Since FD1 is the only FD on this table, hence, it is BCNF
+
+-------------------------------
+
+comments
+1. st_id j_id c_id comment_id email_id-> comments
+
+The tuple <st_id, j_id, c_id, comment_id, email_id> is the primary key.
+Since FD1 is the only FD on this table, hence, it is BCNF
+
+-------------------------------
+
+offers
+1. st_id j_id c_id -> offers
+
+The tuple <st_id, j_id, c_id> is the primary key.
+Since FD1 is the only FD on this table, hence, it is BCNF
+
+-------------------------------
+
+slot_alloted
+1. slot_id j_id c_id -> slot_alloted
+
+The tuple <slot_id, j_id, c_id> is the primary key.
+Since FD1 is the only FD on this table, hence, it is BCNF
+
+-------------------------------
+
+advertises
+1. c_id j_id -> advertises
+
+The tuple <j_id, c_id> is the primary key.
+Since FD1 is the only FD on this table, hence, it is BCNF
+
+-------------------------------
+
+ppt_slots
+1. c_id slot_id -> ppt_slots
+
+The tuple <slot_id, c_id> is the primary key.
+Since FD1 is the only FD on this table, hence, it is BCNF
+
